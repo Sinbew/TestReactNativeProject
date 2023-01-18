@@ -10,8 +10,8 @@ const LoginScreen = () => {
 
   const navigation = useNavigation();
 
-  const onAppleButtonPress = () => {
-    navigation.navigate(Route.TEST_SCREEN as never);
+  const onPress = () => {
+    navigation.navigate(Route.AUTHORIZED_STACK as never);
   };
 
   return (
@@ -23,9 +23,9 @@ const LoginScreen = () => {
         style={styles.backgroundImage}
       />
       <View style={styles.mainWrapper}>
-        <LoginButton onPress={onAppleButtonPress} loginType={LoginType.APPLE} title={LocalizationText.apple_id}/>
-        <LoginButton loginType={LoginType.FACEBOOK} title={LocalizationText.facebook}/>
-        <LoginButton loginType={LoginType.GOOGLE} title={LocalizationText.google}/>
+        <LoginButton onPress={onPress} loginType={LoginType.APPLE} title={LocalizationText.apple_id}/>
+        <LoginButton onPress={onPress} loginType={LoginType.FACEBOOK} title={LocalizationText.facebook}/>
+        <LoginButton onPress={onPress} loginType={LoginType.GOOGLE} title={LocalizationText.google}/>
       </View>
     </View>
   );

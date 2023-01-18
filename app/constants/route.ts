@@ -1,7 +1,10 @@
 export const Route = {
-  NOT_AUTHORIZED_STACK: "NotAuthorizedStack",
+  NOT_AUTHORIZED_STACK: 'NotAuthorizedStack',
+  LOGIN_SCREEN: 'LoginScreen',
 
-  LOGIN_SCREEN: "LoginScreen",
-  TEST_SCREEN: "TestScreen",
-  TAB_SCREEN: "TabScreen",
+  AUTHORIZED_STACK: 'AuthorizedStack',
+  HOME_SCREEN: 'HomeScreen',
+  NOTIFICATIONS_SCREEN: 'NotificationsScreen',
+  SEARCH_SCREEN: 'SearchScreen',
+
 };
