@@ -4,14 +4,18 @@ import LoginButton from '../../components/buttons/LoginButton/LoginButton';
 import { useNavigation } from '@react-navigation/native';
 import { LoginType } from '../../constants/login-type';
 import { LocalizationText } from '../../localizations/localization-text';
-import { Route } from '../../constants/route';
+import { useInjection } from 'inversify-react';
+import { Type } from '../../ioc/type';
+import { IAuthService } from '../../service/auth/auth-service-interface';
 
 const LoginScreen = () => {
 
   const navigation = useNavigation();
+  const authService: IAuthService = useInjection(Type.AuthService);
 
   const onPress = () => {
-    navigation.navigate(Route.AUTHORIZED_STACK as never);
+    authService.login();
+    // navigation.navigate(Route.AUTHORIZED_STACK as never);
   };
 
   return (
