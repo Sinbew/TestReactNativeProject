@@ -7,7 +7,6 @@ import {UserState} from '../../state/user/user-state';
 import {useInjection} from 'inversify-react';
 import {Type} from '../../ioc/type';
 import {User} from '../../models/user/user';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = () => {
 
@@ -17,7 +16,6 @@ const HomeScreen = () => {
 
     const onLogoutPress = async () => {
         try {
-            await AsyncStorage.setItem('user', JSON.stringify(null));
             navigation.navigate(Route.LOGIN_SCREEN as never);
         } catch (e) {
             console.warn(e);
