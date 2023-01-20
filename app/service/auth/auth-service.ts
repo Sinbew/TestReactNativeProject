@@ -17,10 +17,10 @@ export class AuthService implements IAuthService {
 
     public async login(): Promise<void> {
         try {
-            const accessToken = AsyncStorageKey.accessToken;
+            const accessToken = 'sdmnf,sfgbdbvs,mns';
             const user = await this.userService.getUser();
             await this.setAccessTokenToAsyncStorage(accessToken);
-            await this.userState.setUser(user);
+            this.userState.setUser(user);
             this.authState.setAccessToken(accessToken);
         } catch (e) {
             console.error('Login error');
@@ -31,6 +31,8 @@ export class AuthService implements IAuthService {
     public async autoLogin(): Promise<boolean> {
         try {
             const accessToken: string | null = await this.getAccessTokenFromAsyncStorage();
+            const user = await this.userService.getUser();
+            this.userState.setUser(user);
             return !!accessToken;
         } catch (e) {
             console.error('Autologin failed', e);
