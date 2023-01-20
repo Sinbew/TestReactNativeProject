@@ -7,15 +7,20 @@ import { LocalizationText } from '../../localizations/localization-text';
 import { useInjection } from 'inversify-react';
 import { Type } from '../../ioc/type';
 import { IAuthService } from '../../service/auth/auth-service-interface';
+import { Route } from '../../constants/route';
 
 const LoginScreen = () => {
 
   const navigation = useNavigation();
   const authService: IAuthService = useInjection(Type.AuthService);
 
-  const onPress = () => {
-    authService.login();
-    // navigation.navigate(Route.AUTHORIZED_STACK as never);
+  const onPress = async () => {
+    try {
+      await authService.login();
+      navigation.navigate(Route.AUTHORIZED_STACK as never);
+    } catch (e) {
+      // display ui error;
+    }
   };
 
   return (

@@ -1,3 +1,3 @@
 export interface IAuthService {
-  login(): void;
+  login(): Promise<void>;
 }
