@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Route} from '../../constants/route';
@@ -7,26 +7,42 @@ import {UserState} from '../../state/user/user-state';
 import {useInjection} from 'inversify-react';
 import {Type} from '../../ioc/type';
 import {User} from '../../models/user/user';
+import {IAuthService} from '../../service/auth/auth-service-interface';
 
 const HomeScreen = () => {
 
     const navigation = useNavigation();
     const userState: UserState = useInjection(Type.UserState);
-    const user: User | null = userState.getUser();
+    const authService: IAuthService = useInjection(Type.AuthService);
+
+
+    const [localUser, setLocalUser] = useState<User | null>(null);
 
     const onLogoutPress = async () => {
         try {
-            navigation.navigate(Route.LOGIN_SCREEN as never);
+            await authService.logout();
+            navigation.navigate(Route.NOT_AUTHORIZED_STACK as never);
+
         } catch (e) {
             console.warn(e);
         }
     };
+    useEffect(() => {
+        userState.getUser().then((user) => {
+            if (user) {
+                setLocalUser(user);
+            } else {
+                authService.logout();
+                // navigation.navigate(Route.NOT_AUTHORIZED_STACK as never);
+            }
+        });
+    }, []);
 
 
     return (
         <View style={styles.container}>
 
-            <UserCardView user={user}/>
+            <UserCardView user={localUser}/>
 
             <TouchableOpacity
                 onPress={onLogoutPress}
