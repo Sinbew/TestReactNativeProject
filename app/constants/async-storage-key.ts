@@ -1,4 +1,5 @@
 export const AsyncStorageKey = {
-  user: '@user',
-  accessToken: '@accessToken'
+    user: '@user',
+    accessToken: '@accessToken',
+    notification: '@notification'
 };
