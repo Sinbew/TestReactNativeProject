@@ -5,7 +5,8 @@ import {NotificationService} from '../../service/notification/notification-servi
 
 @injectable()
 export class NotificationState {
-    @observable public notifications: Notification[] | [];
+
+    @observable private notifications: Notification[];
 
 
     constructor() {
@@ -13,7 +14,7 @@ export class NotificationState {
         this.notifications = [];
     }
 
-    public getNotification(): Notification[] | [] {
+    public getNotifications(): Notification[] {
         return this.notifications;
     }
 
@@ -23,10 +24,8 @@ export class NotificationState {
     }
 
     @action
-    public deleteNotification(id: string): void {
-        this.notifications = [...this.notifications.filter((notification) => {
-            return notification.id !== id;
-        })];
+    public deleteNotification(notification:  Notification): void {
+        this.notifications = this.notifications.filter(item => item.id !== notification.id);
     }
 
 

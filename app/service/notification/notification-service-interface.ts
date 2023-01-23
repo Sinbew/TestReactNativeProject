@@ -1,9 +1,9 @@
 import {Notification} from '../../models/notifications/notification';
 
 export interface INotificationService {
-    getNotification(): Promise<Notification[] | null>;
+    initNotifications(): Promise<void>;
 
     addNotification(notification: Notification): Promise<void>;
 
-    removeNotification(id: string): Promise<void>;
+    removeNotification(notification: Notification): Promise<void>;
 }
