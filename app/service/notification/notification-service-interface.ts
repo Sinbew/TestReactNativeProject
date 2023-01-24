@@ -6,4 +6,6 @@ export interface INotificationService {
     addNotification(notification: Notification): Promise<void>;
 
     removeNotification(notification: Notification): Promise<void>;
+
+    updateNotification(notification: Notification): Promise<void>;
 }
