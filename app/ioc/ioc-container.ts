@@ -19,6 +19,4 @@ iocContainer.bind<UserState>(Type.UserState).to(UserState).inSingletonScope();
 iocContainer.bind<AuthState>(Type.AuthState).to(AuthState).inSingletonScope();
 iocContainer.bind<NotificationState>(Type.NotificationState).to(NotificationState).inSingletonScope();
 iocContainer.bind<NotificationService>(Type.NotificationService).to(NotificationService).inSingletonScope();
-iocContainer.bind<LoaderState>(Type.LoaderState).to(LoaderState).inSingletonScope();
-iocContainer.bind<LoaderService>(Type.LoaderService).to(LoaderService).inSingletonScope();
 export default iocContainer;

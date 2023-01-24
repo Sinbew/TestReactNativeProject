@@ -28,7 +28,8 @@ export class NotificationService implements INotificationService {
             await this.addNotificationToAsyncStorage(item);
             this.notificationState.addNotification(item);
         } catch (e) {
-            console.warn(e);
+            console.error(e);
+            throw e;
         }
     }
 
@@ -43,16 +44,18 @@ export class NotificationService implements INotificationService {
                 await AsyncStorage.setItem(AsyncStorageKey.notification, JSON.stringify(updatedList));
             }
         } catch (e) {
-            console.warn(e);
+            console.error(e);
+            throw e;
         }
     }
 
     public async updateNotification(notification: Notification): Promise<void> {
         try {
-            await this.notificationState.updateNotification(notification);
+            this.notificationState.updateNotification(notification);
             await AsyncStorage.setItem(AsyncStorageKey.notification, JSON.stringify(this.notificationState.getNotifications()));
         } catch (e) {
-            console.warn(e);
+           console.error(e);
+           throw e;
         }
     }
 
