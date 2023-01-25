@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
 import {useInjection} from 'inversify-react';
 import {Type} from '../../ioc/type';
@@ -10,6 +10,8 @@ import AddNotificationView from './views/AddNotificationView';
 import {INotificationService} from '../../service/notification/notification-service-interface';
 import {useNavigation} from '@react-navigation/native';
 import {Route} from '../../constants/route';
+import LoaderContext from '../../context/loader/Loader-context';
+import {set} from 'mobx';
 
 
 const NotificationsScreen = observer(() => {
@@ -21,6 +23,8 @@ const NotificationsScreen = observer(() => {
     // const [notification, setNotification] = useState<Notification[] | []>([]);
     // const [newNotification, setNewNotification] = useState<Notification>({subject: '', appName: '', id: ''});
     const notifications = notificationState.getNotifications();
+
+    const {loading, setLoading} = useContext(LoaderContext);
 
     useEffect(() => {
     }, [notifications.length]);
@@ -42,9 +46,12 @@ const NotificationsScreen = observer(() => {
     };
     const editNotification = async (notification: Notification) => {
         try {
+            // setLoading(false);
             navigation.navigate(Route.EDIT_NOTIFICATION_SCREEN as never, {notification} as never);
+            // setLoading(true);
         } catch (e) {
             console.warn(e);
+            // setLoading(false);
         }
     };
 

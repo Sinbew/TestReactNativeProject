@@ -5,6 +5,7 @@ import {Provider} from 'inversify-react';
 import iocContainer from './app/ioc/ioc-container';
 import {INotificationService} from './app/service/notification/notification-service-interface';
 import {Type} from './app/ioc/type';
+import LoaderProvider from './app/context/loader/LoaderProvider';
 
 const App = () => {
 
@@ -18,9 +19,11 @@ const App = () => {
     };
 
     return (
-        <Provider container={iocContainer}>
-            <RootNavigationContainer/>
-        </Provider>
+        <LoaderProvider>
+            <Provider container={iocContainer}>
+                <RootNavigationContainer/>
+            </Provider>
+        </LoaderProvider>
     );
 };
 
