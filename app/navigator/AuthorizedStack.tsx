@@ -3,13 +3,9 @@ import {Route} from '../constants/route';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import SearchScreen from '../screens/SearchScreen/SearchScreen';
-import NotificationsScreen from '../screens/NotificationsScreen/NotificationsScreen';
-import NotAuthorizedStack from './NotAuthorizedStack';
 import NotificationStack from './NotificationStack';
 
 const Tab = createBottomTabNavigator();
-
-
 const AuthorizedStack = () => {
     return (
         <Tab.Navigator>
