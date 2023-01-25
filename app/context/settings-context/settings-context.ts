@@ -8,7 +8,8 @@ export interface ISettingsInterface {
 
 const SettingsContext = createContext<ISettingsInterface>({
     showLoader: () => {
-    }, showError: () => {
+    },
+    showError: () => {
     }
 });
 
