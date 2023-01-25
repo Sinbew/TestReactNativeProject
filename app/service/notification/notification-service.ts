@@ -54,8 +54,8 @@ export class NotificationService implements INotificationService {
             this.notificationState.updateNotification(notification);
             await AsyncStorage.setItem(AsyncStorageKey.notification, JSON.stringify(this.notificationState.getNotifications()));
         } catch (e) {
-           console.error(e);
-           throw e;
+            console.error(e);
+            throw e;
         }
     }
 

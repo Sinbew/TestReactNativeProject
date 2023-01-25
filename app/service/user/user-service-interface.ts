@@ -1,6 +1,7 @@
-import { User } from '../../models/user/user';
+import {User} from '../../models/user/user';
 
 export interface IUserService {
-  getUser(): Promise<User>;
-  updateUser(user: User): Promise<void>;
+    getUser(): Promise<User>;
+
+    updateUser(user: User): Promise<void>;
 }

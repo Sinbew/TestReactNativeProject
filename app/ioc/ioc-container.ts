@@ -8,8 +8,6 @@ import {UserService} from '../service/user/user-service';
 import {IUserService} from '../service/user/user-service-interface';
 import {NotificationState} from '../state/notification/notification-state';
 import {NotificationService} from '../service/notification/notification-service';
-import {LoaderService} from '../service/loader/loader-service';
-import {LoaderState} from '../state/loader/loader-state';
 
 const iocContainer = new Container();
 iocContainer.bind<IAuthService>(Type.AuthService).to(AuthService);

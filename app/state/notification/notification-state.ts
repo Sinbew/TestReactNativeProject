@@ -1,8 +1,6 @@
 import {injectable} from 'inversify';
 import {Notification} from '../../models/notifications/notification';
-import {action, observable, makeAutoObservable} from 'mobx';
-import {NotificationService} from '../../service/notification/notification-service';
-import app from '../../../App';
+import {action, makeAutoObservable, observable} from 'mobx';
 
 @injectable()
 export class NotificationState {
