@@ -1,26 +1,50 @@
-import React, {useState} from 'react';
-import {observer} from 'mobx-react-lite';
-import LoaderContext from './Loader-context';
+import React, { useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import LoaderContext from './loader-context';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 
 export interface AppProcessingProviderProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 const LoaderProvider = observer(({children}: AppProcessingProviderProps) => {
 
-    const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const setLoader = () => {
-        setLoading(loading);
-    };
-    return (
-        <LoaderContext.Provider
-            value={{loading, setLoading}}>
-            {children}
+  const showLoader = (loading: boolean) => {
+    setIsLoading(loading);
+  };
 
-        </LoaderContext.Provider>
-    );
+  const renderLoaderView = () => {
+    if (isLoading) {
+      return (
+        <View style={styles.container}>
+          <ActivityIndicator color={'#fff'} size='large' />
+        </View>
+      );
+    }
+    return null;
+  };
+
+  return (
+    <LoaderContext.Provider
+      value={{showLoader}}>
+      {children}
+      {renderLoaderView()}
+    </LoaderContext.Provider>
+  );
+});
+
+const styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(1, 1, 1, 0.2)',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });
 
 export default LoaderProvider;
