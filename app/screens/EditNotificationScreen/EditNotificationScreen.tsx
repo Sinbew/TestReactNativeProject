@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Route } from '../../constants/route';
@@ -7,6 +7,7 @@ import { useInjection } from 'inversify-react';
 import { Type } from '../../ioc/type';
 import { Notification } from '../../models/notifications/notification';
 import { observer } from 'mobx-react-lite';
+import LoaderContext from '../../context/loader/loader-context';
 
 const EditNotificationScreen = observer(() => {
 
@@ -15,13 +16,18 @@ const EditNotificationScreen = observer(() => {
   const params: any = useRoute().params;
   const incomeNotification: Notification = params.notification!;
   const [notification, setNotification] = useState<Notification>(incomeNotification);
+  const {showLoader} = useContext(LoaderContext);
 
   const updateNotification = async () => {
     try {
+      showLoader(true);
       await notificationService.updateNotification(notification);
-      navigation.goBack();
+      setTimeout(() => {
+        showLoader(false);
+        navigation.goBack();
+      }, 2000);
     } catch (e) {
-      console.warn(e);
+      showLoader(false);
     }
   };
 
