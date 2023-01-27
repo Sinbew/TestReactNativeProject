@@ -4,5 +4,6 @@ export const Route = {
     CREATE_USER_SCREEN: 'CreateUserScreen',
 
     AUTHORIZED_STACK: 'AuthorizedStack',
+    CHOOSE_CHARACTER_SCREEN: 'ChooseCharacterScreen'
 
 };

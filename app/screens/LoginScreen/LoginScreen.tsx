@@ -7,7 +7,6 @@ import {useInjection} from 'inversify-react';
 import {Type} from '../../ioc/type';
 import {SheetManager} from 'react-native-actions-sheet';
 import SheetId from '../../constants/sheet-id';
-import sheetId from '../../constants/sheet-id';
 import {IUserService} from '../../service/user/user-service-interface';
 import {observer} from 'mobx-react-lite';
 
@@ -24,7 +23,7 @@ const LoginScreen = observer(() => {
         try {
             const existingUser = await userService.getUser();
             if (existingUser) {
-                await SheetManager.show((sheetId.createUser));
+                await SheetManager.show((SheetId.createUser));
             } else {
                 return;
             }
