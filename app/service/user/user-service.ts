@@ -9,24 +9,33 @@ import {UserState} from '../../state/user/user-state';
 @injectable()
 export class UserService implements IUserService {
 
-    private DEFAULT_USER: User = {
-        firstName: 'Alex',
-        lastName: 'Denysenko',
-        email: 'denysenkoa@mydigicode.com'
-    };
 
     @inject(Type.UserState) private userState: UserState;
 
 
-    public async getUser(): Promise<User> {
+    public async getUser(): Promise<User | null> {
         try {
-            const existingUser: User | null = await this.getUserFromAsyncStorage();
-            if (existingUser) {
-                return existingUser;
-            }
-            return this.DEFAULT_USER;
+            return await this.getUserFromAsyncStorage();
         } catch (e) {
             console.error('Get user error', e);
+            throw e;
+        }
+    }
+
+    public async setUser(user: User): Promise<void> {
+        try {
+            await this.setUserToAsyncStorage(user);
+            this.userState.setUser(user);
+            // console.warn(user);
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    public async updateNickname(nickname: string): Promise<void> {
+        try {
+            await this.setNicknameToAsyncStorage(nickname);
+        } catch (e) {
             throw e;
         }
     }
@@ -61,5 +70,14 @@ export class UserService implements IUserService {
             throw e;
         }
     }
+
+    private async setNicknameToAsyncStorage(nickname: string): Promise<void> {
+        try {
+            await AsyncStorage.setItem(AsyncStorageKey.nickName, JSON.stringify(nickname));
+        } catch (e) {
+            throw e;
+        }
+    }
+
 
 }

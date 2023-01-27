@@ -12,7 +12,6 @@ export class AuthService implements IAuthService {
 
     @inject(Type.AuthState) private authState: AuthState;
     @inject(Type.UserState) private userState: UserState;
-
     @inject(Type.UserService) private userService: IUserService;
 
     public async login(): Promise<void> {

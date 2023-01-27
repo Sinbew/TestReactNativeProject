@@ -55,9 +55,9 @@ const SettingsProvider = observer(({children}: AppProcessingProviderProps) => {
     return (
         <SettingsContext.Provider
             value={{showLoader, showError}}>
-            {children}
             {renderLoaderView()}
             {renderErrorView()}
+            {children}
         </SettingsContext.Provider>
     );
 });
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(1, 1, 1, 0.2)',
         justifyContent: 'center',
         alignItems: 'center',
-
+        zIndex: 1000
     },
     error: {
         position: 'absolute',

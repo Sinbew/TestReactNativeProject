@@ -1,10 +1,13 @@
 export const Type = {
     AuthService: Symbol.for('AuthService'),
     UserService: Symbol.for('UserService'),
-    NotificationService: Symbol.for('NotificationService'),
+    DeviceService: Symbol.for('DeviceService'),
+    CharacterService: Symbol.for('CharacterService'),
 
     UserState: Symbol.for('UserState'),
     AuthState: Symbol.for('AuthState'),
-    NotificationState: Symbol.for('NotificationState'),
+    DeviceState: Symbol.for('DeviceState'),
+    CharacterState: Symbol.for('CharacterState'),
+
 
 };

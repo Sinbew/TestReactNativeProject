@@ -1,6 +1,6 @@
 import {injectable} from 'inversify';
 import {User} from '../../models/user/user';
-import {action, makeAutoObservable, observable} from 'mobx';
+import {action, makeObservable, observable} from 'mobx';
 
 @injectable()
 export class UserState {
@@ -8,7 +8,7 @@ export class UserState {
     @observable private user: User | null;
 
     constructor() {
-        makeAutoObservable(this);
+        makeObservable(this);
         this.user = null;
     }
 
@@ -18,7 +18,7 @@ export class UserState {
     }
 
     @action
-    public setUser(value: User) {
+    public setUser(value: User | null) {
         this.user = value;
     }
 }

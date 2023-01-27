@@ -1,35 +1,46 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ImageBackground, StyleSheet, View} from 'react-native';
 import LoginButton from '../../components/buttons/LoginButton/LoginButton';
-import {useNavigation} from '@react-navigation/native';
 import {LoginType} from '../../constants/login-type';
 import {LocalizationText} from '../../localizations/localization-text';
 import {useInjection} from 'inversify-react';
 import {Type} from '../../ioc/type';
-import {IAuthService} from '../../service/auth/auth-service-interface';
-import {Route} from '../../constants/route';
+import {SheetManager} from 'react-native-actions-sheet';
+import SheetId from '../../constants/sheet-id';
+import sheetId from '../../constants/sheet-id';
+import {IUserService} from '../../service/user/user-service-interface';
+import {observer} from 'mobx-react-lite';
 
 
-const LoginScreen = () => {
+const LoginScreen = observer(() => {
+    const userService: IUserService = useInjection(Type.UserService);
 
-    const navigation = useNavigation();
-    const authService: IAuthService = useInjection(Type.AuthService);
+    useEffect(() => {
+        checkCreatedUser();
+    }, []);
 
 
-    const onPress = async () => {
+    const checkCreatedUser = async () => {
         try {
-            await authService.login();
-            navigation.navigate(Route.AUTHORIZED_STACK as never);
+            const existingUser = await userService.getUser();
+            if (existingUser) {
+                await SheetManager.show((sheetId.createUser));
+            } else {
+                return;
+            }
         } catch (e) {
-            // display ui error;
+            throw e;
         }
+    };
+    const onPress = async () => {
+        await SheetManager.show(SheetId.createUser);
     };
     return (
         <View
             style={styles.container}>
             <ImageBackground
-                source={require('../../../assets/images/login_background.jpg')}
-                resizeMode="cover"
+                source={require('../../../assets/images/login_background.png')}
+                resizeMode='cover'
                 style={styles.backgroundImage}
             />
             <View style={styles.mainWrapper}>
@@ -39,7 +50,7 @@ const LoginScreen = () => {
             </View>
         </View>
     );
-};
+});
 
 const styles = StyleSheet.create({
     container: {
@@ -77,7 +88,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         zIndex: 0,
         flex: 1,
-        opacity: 0.12,
+        opacity: 0.1,
     },
 });
 export default LoginScreen;
