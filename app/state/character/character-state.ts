@@ -1,6 +1,7 @@
 import {action, makeObservable, observable} from 'mobx';
 import {injectable} from 'inversify';
 import {Character} from '../../models/character/character';
+import DefaultCharacter from '../../constants/character/default-character';
 
 @injectable()
 export class CharacterState {

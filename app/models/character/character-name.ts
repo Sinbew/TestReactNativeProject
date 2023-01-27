@@ -1,5 +1,5 @@
 export enum CharacterName {
-    DRAX = 'DRAX',
     PAKT = 'PAKT',
+    DRAX = 'DRAX',
     MAO = 'MAO',
 }

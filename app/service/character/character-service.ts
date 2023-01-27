@@ -6,7 +6,7 @@ import defaultCharacters from '../../constants/character/default-character';
 
 
 @injectable()
-export class CharacterSerivice implements ICharacterService {
+export class CharacterService implements ICharacterService {
 
     @inject(Type.CharacterState) private characterState: CharacterState;
 
