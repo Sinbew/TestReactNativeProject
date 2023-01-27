@@ -1,6 +1,7 @@
 import {User} from '../../models/user/user';
 
 export interface IUserService {
+
     getUser(): Promise<User | null>;
 
     setUser(user: User): Promise<void>;
@@ -8,4 +9,6 @@ export interface IUserService {
     updateUser(user: User): Promise<void>;
 
     updateNickname(nickname: string): Promise<void>;
+
+    isUserCompleted(user: User | null): boolean;
 }

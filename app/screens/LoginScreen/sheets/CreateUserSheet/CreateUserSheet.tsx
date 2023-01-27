@@ -31,23 +31,11 @@ const CreateUserSheet = observer(() => {
 
     useEffect(() => {
         initDevices();
-        initUser();
-    }, [user]);
+    }, [devices.length]);
 
     const initDevices = () => {
         if (devices.length === 0) {
             deviceService.initDevices();
-        }
-    };
-
-    const initUser = async () => {
-        if (!user) {
-            const existingUser = await userService.getUser();
-            if (existingUser) {
-                userState.setUser(existingUser);
-                setNickname(existingUser.nickName);
-                setSelectedDevice(existingUser.device);
-            }
         }
     };
 
@@ -56,6 +44,7 @@ const CreateUserSheet = observer(() => {
             showLoader(true);
             await userService.setUser({nickName: nickname.trim(), device: selectedDevice!});
             showLoader(false);
+            await SheetManager.hide(SheetId.createUser);
         } catch (e) {
             showLoader(false);
             showError(e as Error);

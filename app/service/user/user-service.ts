@@ -9,7 +9,6 @@ import {UserState} from '../../state/user/user-state';
 @injectable()
 export class UserService implements IUserService {
 
-
     @inject(Type.UserState) private userState: UserState;
 
 
@@ -26,7 +25,6 @@ export class UserService implements IUserService {
         try {
             await this.setUserToAsyncStorage(user);
             this.userState.setUser(user);
-            // console.warn(user);
         } catch (e) {
             throw e;
         }
@@ -47,6 +45,19 @@ export class UserService implements IUserService {
         } catch (e) {
             console.error('Update user error');
         }
+    }
+
+    public isUserCompleted(user: User | null): boolean {
+        if (!user) {
+            return false;
+        }
+        if (!user.nickName || !user.device) {
+            return false;
+        }
+        if (!user.character) {
+            return false;
+        }
+        return true;
     }
 
     private async setUserToAsyncStorage(user: User): Promise<void> {
@@ -78,6 +89,5 @@ export class UserService implements IUserService {
             throw e;
         }
     }
-
 
 }

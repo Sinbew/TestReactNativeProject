@@ -1,14 +1,14 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import ActionSheet from 'react-native-actions-sheet';
-import SheetId from '../../../constants/sheet-id';
+import SheetId from '../../../../constants/sheet-id';
 import {observer} from 'mobx-react-lite';
 
 const ChooseCharacterSheet = observer(() => {
 
     return (
         <ActionSheet containerStyle={styles.container} id={SheetId.chooseCharacter}>
-            <View>
+            <View style={{flex: 1}}>
                 <Text>KEK</Text>
                 <Text>KEK</Text>
                 <Text>KEK</Text>

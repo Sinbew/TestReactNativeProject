@@ -7,33 +7,42 @@ import {useInjection} from 'inversify-react';
 import {Type} from '../../ioc/type';
 import {SheetManager} from 'react-native-actions-sheet';
 import SheetId from '../../constants/sheet-id';
-import {IUserService} from '../../service/user/user-service-interface';
 import {observer} from 'mobx-react-lite';
+import { UserState } from '../../state/user/user-state';
+import { User } from '../../models/user/user';
 
 
 const LoginScreen = observer(() => {
-    const userService: IUserService = useInjection(Type.UserService);
+
+    const userState: UserState = useInjection(Type.UserState);
+    const user: User | null = userState.getUser();
 
     useEffect(() => {
-        checkCreatedUser();
-    }, []);
+        checkUser();
+    });
 
-
-    const checkCreatedUser = async () => {
+    const checkUser = async () => {
         try {
-            const existingUser = await userService.getUser();
-            if (existingUser) {
-                await SheetManager.show((SheetId.createUser));
-            } else {
+            if (!user) {
+                return;
+            }
+            if (!user.nickName || !user.device) {
+                await SheetManager.show(SheetId.createUser);
+                return;
+            }
+            if (!user.character) {
+                await SheetManager.show(SheetId.chooseCharacter);
                 return;
             }
         } catch (e) {
             throw e;
         }
     };
+
     const onPress = async () => {
         await SheetManager.show(SheetId.createUser);
     };
+
     return (
         <View
             style={styles.container}>
@@ -77,7 +86,6 @@ const styles = StyleSheet.create({
         fontWeight: '900',
 
         fontSize: 22,
-        // letterSpacing: 50,
         marginLeft: 'auto',
         marginRight: 'auto',
     },
