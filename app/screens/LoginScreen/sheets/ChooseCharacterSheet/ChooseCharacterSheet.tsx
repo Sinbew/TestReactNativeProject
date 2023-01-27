@@ -47,8 +47,8 @@ const ChooseCharacterSheet = observer(() => {
                 {characters.length === 0 ? null :
                     <CharacterCardView
                         characters={characters}
-                        onSelectCharacter={selectedCharacter}
-                        selectedCharacter={setSelectedCharacter}/>
+                        onSelectCharacter={setSelectedCharacter}
+                        selectedCharacter={selectedCharacter}/>
                 }
             </View>
         </ActionSheet>
