@@ -19,7 +19,6 @@ import {colors} from '../../../../constants/colors';
 
 const ChooseCharacterSheet = observer(() => {
 
-
     const userState: UserState = useInjection(Type.UserState);
     const user: User = userState.getUser()!;
     const userService: IUserService = useInjection(Type.UserService);
@@ -27,22 +26,16 @@ const ChooseCharacterSheet = observer(() => {
     const characterService: ICharacterService = useInjection(Type.CharacterService);
     const characters: Character[] = characterState.getCharacters();
     const [selectedCharacter, setSelectedCharacter] = useState<Character | undefined>(undefined);
-
     const {showLoader, showError} = useContext(SettingsContext);
-
-
     const buttonDisabled: boolean = !selectedCharacter;
-
     useEffect(() => {
         initCharacters();
     }, [characters.length]);
-
     const initCharacters = async () => {
         if (characters.length === 0) {
             await characterService.initCharacters();
         }
     };
-
     const createCharacter = async () => {
         try {
             await SheetManager.hide(SheetId.chooseCharacter);
@@ -56,8 +49,6 @@ const ChooseCharacterSheet = observer(() => {
             showError(e as Error);
         }
     };
-
-
     return (
         <ActionSheet
             containerStyle={styles.container}
@@ -70,7 +61,6 @@ const ChooseCharacterSheet = observer(() => {
                     <Text style={styles.subTitle}>{LocalizationText.pleaseSelectClan}</Text>
                 </View>
                 <ImageBackground source={require('../../../../../assets/images/logo-secondary.png')} style={styles.secondaryLogo}/>
-
                 {characters.length === 0 ? null :
                     <CharacterCardView
                         containerStyle={{marginTop: 40}}
@@ -92,12 +82,10 @@ const ChooseCharacterSheet = observer(() => {
         </ActionSheet>
     );
 });
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors['#242731'],
-
     },
     mainWrapper: {
         paddingHorizontal: 24,
@@ -117,7 +105,6 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
         marginBottom: 8,
-
     },
     subTitle: {
         fontSize: 14,

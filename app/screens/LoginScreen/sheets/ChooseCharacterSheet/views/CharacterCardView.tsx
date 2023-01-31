@@ -4,7 +4,6 @@ import {ImageBackground, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacit
 import {CharacterName} from '../../../../../models/character/character-name';
 import {colors} from '../../../../../constants/colors';
 
-
 export interface CharacterCardViewProps {
     characters: Character[];
     onSelectCharacter: (character: Character) => void;
@@ -15,12 +14,10 @@ export interface CharacterCardViewProps {
 }
 
 const CharacterCardView = (props: CharacterCardViewProps) => {
-
     const characters = props.characters;
     const onSelect = (character: Character) => {
         props.onSelectCharacter(character);
     };
-
     const textStyle = (): StyleProp<TextStyle> => {
         switch (props.selectedCharacter?.name) {
             case CharacterName.PAKT:
@@ -41,7 +38,6 @@ const CharacterCardView = (props: CharacterCardViewProps) => {
                 };
         }
     };
-
     const renderCharacter = (character: Character, index: number) => {
         const selected: boolean = !!(props.selectedCharacter && props.selectedCharacter.name === character.name);
         return (
@@ -51,7 +47,6 @@ const CharacterCardView = (props: CharacterCardViewProps) => {
                 onPress={() => onSelect(character)}
             >
                 <ImageBackground style={[styles.image, selected && styles.selected]} source={character.image as any}/>
-
                 <View style={styles.textWrapper}>
                     <Text style={[styles.defaultCharacterName, textStyle()]}>
                         {props.selectedCharacter?.name === character.name ? character.name : ''}

@@ -51,8 +51,6 @@ const CreateUserSheet = observer(() => {
             showError(e as Error);
         }
     };
-
-
     const onClosePress = async () => {
         await SheetManager.hide(SheetId.createUser);
     };

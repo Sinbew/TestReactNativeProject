@@ -3,7 +3,6 @@ import {ImageBackground, StyleSheet, TouchableOpacity, View} from 'react-native'
 import {Device} from '../../../../../models/device/device';
 import {colors} from '../../../../../constants/colors';
 
-
 export interface DevicesCardViewProps {
     devices: Device[];
     onSelectDevice: (device: Device) => void;
@@ -11,13 +10,10 @@ export interface DevicesCardViewProps {
 }
 
 const DevicesCardView = (props: DevicesCardViewProps) => {
-
     const devices = props.devices;
-
     const onSelect = (device: Device) => {
         props.onSelectDevice(device);
     };
-
     const renderDevice = (device: Device, index: number) => {
         const selected: boolean = !!(props.selectedDevice && props.selectedDevice.type === device.type);
         return (
