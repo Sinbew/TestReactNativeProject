@@ -15,15 +15,11 @@ import SettingsContext from '../../../../context/settings-context/settings-conte
 import {colors} from '../../../../constants/colors';
 
 const ChooseAvatarSheet = observer(() => {
-
     const userState: UserState = useInjection(Type.UserState);
     const user: User = userState.getUser()!;
     const userService: IUserService = useInjection(Type.UserService);
     const [avatar, setAvatar] = useState<string>('');
-
-
     const {showLoader} = useContext(SettingsContext);
-
     const buttonDisabled: boolean = !avatar;
     const showImageLibrary = async () => {
         try {
@@ -35,7 +31,7 @@ const ChooseAvatarSheet = observer(() => {
             const uri: string = asset.uri!;
             setAvatar(uri);
         } catch (e) {
-
+            console.error('Image library error', e);
         }
     };
     const onRefreshPress = async () => {
@@ -45,7 +41,6 @@ const ChooseAvatarSheet = observer(() => {
             throw new Error('Error with refreshing avatar');
         }
     };
-
     const createAvatar = async () => {
         try {
             await SheetManager.hide(SheetId.chooseAvatar);
@@ -73,7 +68,6 @@ const ChooseAvatarSheet = observer(() => {
                     {avatar ? <Image source={{uri: avatar}} style={{height: '100%', width: '100%'}}/> : <DefaultAvatarIcon/>}
                 </TouchableOpacity>
                 <View style={styles.buttonsContainer}>
-
                     <TouchableOpacity activeOpacity={0.8} style={styles.refresh}
                                       onPress={onRefreshPress}>
                         <Text style={styles.refreshText}>{LocalizationText.refresh}</Text>
@@ -92,7 +86,6 @@ const ChooseAvatarSheet = observer(() => {
         </ActionSheet>
     );
 });
-
 export default ChooseAvatarSheet;
 
 const styles = StyleSheet.create({
@@ -166,5 +159,4 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         textTransform: 'uppercase'
     },
-
 });
