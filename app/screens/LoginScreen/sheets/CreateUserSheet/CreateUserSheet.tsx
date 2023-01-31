@@ -14,6 +14,7 @@ import {IUserService} from '../../../../service/user/user-service-interface';
 import SettingsContext from '../../../../context/settings-context/settings-context';
 import {User} from '../../../../models/user/user';
 import {UserState} from '../../../../state/user/user-state';
+import {colors} from '../../../../constants/colors';
 
 
 const CreateUserSheet = observer(() => {
@@ -38,7 +39,6 @@ const CreateUserSheet = observer(() => {
             deviceService.initDevices();
         }
     };
-
     const onCreatePress = async () => {
         try {
             await SheetManager.hide(SheetId.createUser);
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 24,
         paddingTop: 15,
         paddingBottom: 49,
-        backgroundColor: '#242731',
+        backgroundColor: colors.mainAccentColor,
         borderRadius: 16,
         width: '90%',
         marginLeft: 'auto',
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     welcomeText: {
-        color: '#fff',
+        color: colors.white,
         fontWeight: '700',
         fontSize: 15,
     },
@@ -123,20 +123,20 @@ const styles = StyleSheet.create({
         padding: 10,
         width: 40,
         height: 40,
-        backgroundColor: '#191B21',
+        backgroundColor: colors.secondaryAccentColor,
         marginLeft: 'auto'
     },
     closeIcon: {
-        color: 'white',
+        color: colors.white,
         textAlign: 'center',
         fontWeight: '800'
     },
     inputForName: {
-        backgroundColor: '#191B20',
+        backgroundColor: colors.secondaryAccentColor,
         marginTop: 20,
         padding: 20,
         borderRadius: 16,
-        color: 'white'
+        color: colors.white
     },
     yourDeviceText: {
         color: '#fff',
@@ -146,18 +146,18 @@ const styles = StyleSheet.create({
         fontWeight: '500'
     },
     createButton: {
-        backgroundColor: '#EFD548',
+        backgroundColor: colors.mainYellowAccentColor,
         padding: 20,
         borderRadius: 16,
     },
     createButtonDisabled: {
-        backgroundColor: 'rgba(239,213,72,0.5)',
+        backgroundColor: colors.mainYellowAccentColorDisabled,
         padding: 20,
         borderRadius: 16,
     },
     createButtonText: {
         textAlign: 'center',
-        color: '#181A1C',
+        color: colors.mainDarkTextColor,
         fontWeight: '500',
         textTransform: 'uppercase'
     }

@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import Svg, {SvgProps, Path} from 'react-native-svg';
 
-const defaultAvatar = (props: SvgProps) => (
+const DefaultAvatarIcon = (props: SvgProps) => (
     <Svg
         width={52}
         height={50}
@@ -19,4 +19,4 @@ const defaultAvatar = (props: SvgProps) => (
     </Svg>
 );
 
-export default defaultAvatar;
+export default DefaultAvatarIcon;

@@ -27,7 +27,6 @@ const DevicesCardView = (props: DevicesCardViewProps) => {
                 style={[styles.imageContainer, selected && styles.selected]}
             >
                 <ImageBackground style={styles.image} source={device.image as any}/>
-
             </TouchableOpacity>
         );
     };

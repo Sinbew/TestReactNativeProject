@@ -9,7 +9,7 @@ import {useInjection} from 'inversify-react';
 import {Type} from '../../../../ioc/type';
 import {User} from '../../../../models/user/user';
 import {IUserService} from '../../../../service/user/user-service-interface';
-import DefaultAvatar from '../../../../components/icons/defaultAvatar';
+import DefaultAvatarIcon from '../../../../components/icons/DefaultAvatarIcon';
 import {ImagePickerResponse, launchImageLibrary} from 'react-native-image-picker';
 import SettingsContext from '../../../../context/settings-context/settings-context';
 
@@ -69,7 +69,7 @@ const ChooseAvatarSheet = observer(() => {
                     <Text style={styles.subTitle}>{LocalizationText.updateAvatar}</Text>
                 </View>
                 <TouchableOpacity style={styles.avatarContainer} onPress={showImageLibrary}>
-                    {avatar ? <Image source={{uri: avatar}} style={{height: '100%', width: '100%'}}/> : <DefaultAvatar/>}
+                    {avatar ? <Image source={{uri: avatar}} style={{height: '100%', width: '100%'}}/> : <DefaultAvatarIcon/>}
                 </TouchableOpacity>
                 <View style={styles.buttonsContainer}>
 
