@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 24,
         paddingTop: 15,
         paddingBottom: 49,
-        backgroundColor: colors.mainAccentColor,
+        backgroundColor: colors['#242731'],
         borderRadius: 16,
         width: '90%',
         marginLeft: 'auto',
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     welcomeText: {
-        color: colors.white,
+        color: colors['#ffffff'],
         fontWeight: '700',
         fontSize: 15,
     },
@@ -123,20 +123,20 @@ const styles = StyleSheet.create({
         padding: 10,
         width: 40,
         height: 40,
-        backgroundColor: colors.secondaryAccentColor,
+        backgroundColor: colors['#191B20'],
         marginLeft: 'auto'
     },
     closeIcon: {
-        color: colors.white,
+        color: colors['#ffffff'],
         textAlign: 'center',
         fontWeight: '800'
     },
     inputForName: {
-        backgroundColor: colors.secondaryAccentColor,
+        backgroundColor: colors['#191B20'],
         marginTop: 20,
         padding: 20,
         borderRadius: 16,
-        color: colors.white
+        color: colors['#ffffff']
     },
     yourDeviceText: {
         color: '#fff',
@@ -146,18 +146,18 @@ const styles = StyleSheet.create({
         fontWeight: '500'
     },
     createButton: {
-        backgroundColor: colors.mainYellowAccentColor,
+        backgroundColor: colors['#EFD548'],
         padding: 20,
         borderRadius: 16,
     },
     createButtonDisabled: {
-        backgroundColor: colors.mainYellowAccentColorDisabled,
+        backgroundColor: colors['#EFD5487F'],
         padding: 20,
         borderRadius: 16,
     },
     createButtonText: {
         textAlign: 'center',
-        color: colors.mainDarkTextColor,
+        color: colors['#181A1C'],
         fontWeight: '500',
         textTransform: 'uppercase'
     }

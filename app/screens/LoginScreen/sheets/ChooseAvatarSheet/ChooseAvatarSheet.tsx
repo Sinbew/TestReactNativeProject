@@ -12,6 +12,7 @@ import {IUserService} from '../../../../service/user/user-service-interface';
 import DefaultAvatarIcon from '../../../../components/icons/DefaultAvatarIcon';
 import {ImagePickerResponse, launchImageLibrary} from 'react-native-image-picker';
 import SettingsContext from '../../../../context/settings-context/settings-context';
+import {colors} from '../../../../constants/colors';
 
 const ChooseAvatarSheet = observer(() => {
 
@@ -97,14 +98,13 @@ export default ChooseAvatarSheet;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#242731',
+        backgroundColor: colors['#242731'],
 
     },
     mainWrapper: {
         paddingHorizontal: 24,
         paddingTop: 59,
         paddingBottom: 32,
-        // justifyContent: 'space-between',
         height: '100%'
     },
     titlesWrapper: {
@@ -122,14 +122,14 @@ const styles = StyleSheet.create({
     },
     subTitle: {
         fontSize: 14,
-        color: '#808191',
+        color: colors['#808191'],
         maxWidth: 202,
         textAlign: 'center'
     },
     avatarContainer: {
         width: 110,
         height: 110,
-        backgroundColor: '#808191',
+        backgroundColor: colors['#808191'],
         marginTop: 60,
         borderRadius: 16,
         alignSelf: 'center',
@@ -146,23 +146,23 @@ const styles = StyleSheet.create({
     },
     refreshText: {
         textTransform: 'uppercase',
-        color: '#EFD548'
+        color: colors['#EFD548']
     },
     createButton: {
-        backgroundColor: '#EFD548',
+        backgroundColor: colors['#EFD548'],
         padding: 20,
         borderRadius: 16,
         marginTop: 'auto'
     },
     createButtonDisabled: {
-        backgroundColor: 'rgba(239,213,72,0.5)',
+        backgroundColor: colors['#EFD5487F'],
         padding: 20,
         borderRadius: 16,
         marginTop: 'auto'
     },
     createButtonText: {
         textAlign: 'center',
-        color: '#181A1C',
+        color: colors['#181A1C'],
         fontWeight: '500',
         textTransform: 'uppercase'
     },

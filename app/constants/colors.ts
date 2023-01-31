@@ -1,16 +1,17 @@
 export const colors = {
-    white: '#ffffff',
-    mainGrey: '#808191',
-    mainAccentColor: '#242731',
-    secondaryAccentColor: '#191B20',
+    '#ffffff': '#ffffff', // white
 
-    mainYellowAccentColor: '#EFD548',
-    mainYellowAccentColorDisabled: '#EFD5487F',
+    '#242731': '#242731', // main accent
+    '#191B20': '#191B20', // main dark accent
 
-    mainDarkTextColor: '#181A1C',
-    characterCreateTextBlue: '#51A4ED',
-    characterCreateTextGreen: '#91CD4B',
-    characterCreateTextRed: '#FF4A1D',
+    '#EFD548': '#EFD548', // main yellow
+    '#EFD5487F': '#EFD5487F', // main yellow disabled
 
-    mainBackgroundColor: '#1F2128',
+    '#808191': '#808191', // text grey
+    '#181A1C': '#181A1C', // text dark
+    '#51A4ED': '#51A4ED', // text blue
+    '#91CD4B': '#91CD4B', // text green
+    '#FF4A1D': '#FF4A1D', // text red
+
+    '#1F2128': '#1F2128', // main dark background
 };

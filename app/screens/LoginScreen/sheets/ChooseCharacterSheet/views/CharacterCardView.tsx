@@ -2,6 +2,8 @@ import React from 'react';
 import {Character} from '../../../../../models/character/character';
 import {ImageBackground, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle} from 'react-native';
 import {CharacterName} from '../../../../../models/character/character-name';
+import {colors} from '../../../../../constants/colors';
+
 
 export interface CharacterCardViewProps {
     characters: Character[];
@@ -23,15 +25,15 @@ const CharacterCardView = (props: CharacterCardViewProps) => {
         switch (props.selectedCharacter?.name) {
             case CharacterName.PAKT:
                 return {
-                    color: '#91CD4B',
+                    color: colors['#91CD4B'],
                 };
             case  CharacterName.DRAX:
                 return {
-                    color: '#51A4ED',
+                    color: colors['#51A4ED'],
                 };
             case CharacterName.MAO:
                 return {
-                    color: '#FF4A1D',
+                    color: colors['#FF4A1D'],
                 };
             default:
                 return {
@@ -93,14 +95,14 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     defaultCharacterName: {
-        color: '#51A4ED',
+        color: colors['#ffffff'],
         fontWeight: '700',
         fontSize: 16,
         textAlign: 'center',
         marginBottom: 4
     },
     characterAbility: {
-        color: '#51A4ED',
+        color: colors['#ffffff'],
         fontWeight: '500',
         fontSize: 12,
         textAlign: 'center'

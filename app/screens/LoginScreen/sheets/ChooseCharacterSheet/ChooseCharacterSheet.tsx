@@ -14,6 +14,7 @@ import {IUserService} from '../../../../service/user/user-service-interface';
 import CharacterCardView from './views/CharacterCardView';
 import {LocalizationText} from '../../../../localizations/localization-text';
 import SettingsContext from '../../../../context/settings-context/settings-context';
+import {colors} from '../../../../constants/colors';
 
 
 const ChooseCharacterSheet = observer(() => {
@@ -95,7 +96,7 @@ const ChooseCharacterSheet = observer(() => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#242731',
+        backgroundColor: colors['#242731'],
 
     },
     mainWrapper: {
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
     },
     subTitle: {
         fontSize: 14,
-        color: '#808191',
+        color: colors['#808191'],
         maxWidth: 202,
         textAlign: 'center'
     },
@@ -134,12 +135,12 @@ const styles = StyleSheet.create({
         opacity: 0.1
     },
     createButton: {
-        backgroundColor: '#EFD548',
+        backgroundColor: colors['#EFD548'],
         padding: 20,
         borderRadius: 16,
     },
     createButtonDisabled: {
-        backgroundColor: 'rgba(239,213,72,0.5)',
+        backgroundColor: colors['#EFD5487F'],
         padding: 20,
         borderRadius: 16,
     },
