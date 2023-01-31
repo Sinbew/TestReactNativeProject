@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {ImageBackground, StyleSheet, View} from 'react-native';
+import {Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
 import LoginButton from '../../components/buttons/LoginButton/LoginButton';
 import {LoginType} from '../../constants/login-type';
 import {LocalizationText} from '../../localizations/localization-text';
@@ -8,18 +8,21 @@ import {Type} from '../../ioc/type';
 import {SheetManager} from 'react-native-actions-sheet';
 import SheetId from '../../constants/sheet-id';
 import {observer} from 'mobx-react-lite';
-import { UserState } from '../../state/user/user-state';
-import { User } from '../../models/user/user';
+import {UserState} from '../../state/user/user-state';
+import {User} from '../../models/user/user';
+import {useNavigation} from '@react-navigation/native';
+import {Route} from '../../constants/route';
 
 
 const LoginScreen = observer(() => {
 
     const userState: UserState = useInjection(Type.UserState);
     const user: User | null = userState.getUser();
+    const navigation = useNavigation();
 
     useEffect(() => {
         checkUser();
-    });
+    }, [user]);
 
     const checkUser = async () => {
         try {
@@ -34,6 +37,11 @@ const LoginScreen = observer(() => {
                 await SheetManager.show(SheetId.chooseCharacter);
                 return;
             }
+            if (!user.avatar) {
+                await SheetManager.show(SheetId.chooseAvatar);
+                return;
+            }
+            navigation.navigate(Route.AUTHORIZED_STACK as never);
         } catch (e) {
             throw e;
         }
@@ -51,6 +59,10 @@ const LoginScreen = observer(() => {
                 resizeMode='cover'
                 style={styles.backgroundImage}
             />
+            <Image source={require('../../../assets/images/logo.png')} style={styles.logo}/>
+            <View style={styles.logoTextWrapper}>
+                <Text style={styles.logoText}>LAZII</Text>
+            </View>
             <View style={styles.mainWrapper}>
                 <LoginButton onPress={onPress} loginType={LoginType.APPLE} title={LocalizationText.apple_id}/>
                 <LoginButton onPress={onPress} loginType={LoginType.FACEBOOK} title={LocalizationText.facebook}/>
@@ -73,21 +85,22 @@ const styles = StyleSheet.create({
     },
     logoTextWrapper: {
         marginBottom: 64,
-        position: 'relative',
-        zIndex: 10,
+        alignSelf: 'center'
     },
     logo: {
         marginLeft: 'auto',
         marginRight: 'auto',
         marginBottom: 20,
+        width: 200,
+        height: 217,
     },
     logoText: {
         color: '#EFD548',
         fontWeight: '900',
-
+        fontFamily: 'Rubik',
         fontSize: 22,
-        marginLeft: 'auto',
-        marginRight: 'auto',
+        letterSpacing: 24,
+        transform: ([{translateX: 12}])
     },
     backgroundImage: {
         width: '100%',

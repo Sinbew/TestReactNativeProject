@@ -57,6 +57,9 @@ export class UserService implements IUserService {
         if (!user.character) {
             return false;
         }
+        if (!user.avatar) {
+            return false;
+        }
         return true;
     }
 

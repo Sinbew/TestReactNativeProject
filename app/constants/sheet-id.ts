@@ -1,6 +1,7 @@
 const SheetId = {
     createUser: 'createUser',
-    chooseCharacter: 'chooseCharacter'
+    chooseCharacter: 'chooseCharacter',
+    chooseAvatar: 'chooseAvatar'
 };
 
 export default SheetId;

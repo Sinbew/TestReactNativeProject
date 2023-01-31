@@ -1,20 +1,43 @@
 import React from 'react';
 import {Character} from '../../../../../models/character/character';
-import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ImageBackground, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle} from 'react-native';
+import {CharacterName} from '../../../../../models/character/character-name';
 
 export interface CharacterCardViewProps {
     characters: Character[];
     onSelectCharacter: (character: Character) => void;
     selectedCharacter: Character | null;
 
+    containerStyle?: StyleProp<ViewStyle>;
+
 }
 
 const CharacterCardView = (props: CharacterCardViewProps) => {
 
     const characters = props.characters;
-
     const onSelect = (character: Character) => {
         props.onSelectCharacter(character);
+    };
+
+    const textStyle = (): StyleProp<TextStyle> => {
+        switch (props.selectedCharacter?.name) {
+            case CharacterName.PAKT:
+                return {
+                    color: '#91CD4B',
+                };
+            case  CharacterName.DRAX:
+                return {
+                    color: '#51A4ED',
+                };
+            case CharacterName.MAO:
+                return {
+                    color: '#FF4A1D',
+                };
+            default:
+                return {
+                    color: '#FFFFFF'
+                };
+        }
     };
 
     const renderCharacter = (character: Character, index: number) => {
@@ -24,18 +47,23 @@ const CharacterCardView = (props: CharacterCardViewProps) => {
                 key={index}
                 activeOpacity={0.8}
                 onPress={() => onSelect(character)}
-
             >
                 <ImageBackground style={[styles.image, selected && styles.selected]} source={character.image as any}/>
+
                 <View style={styles.textWrapper}>
-                    <Text style={styles.characterName}>{character.name}</Text>
-                    <Text>{character.abilities}</Text>
+                    <Text style={[styles.defaultCharacterName, textStyle()]}>
+                        {props.selectedCharacter?.name === character.name ? character.name : ''}
+                    </Text>
+                    <Text
+                        style={[styles.characterAbility, textStyle()]}>
+                        {props.selectedCharacter?.abilities === character.abilities ? character.abilities : ''}
+                    </Text>
                 </View>
             </TouchableOpacity>
         );
     };
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, props.containerStyle]}>
             {characters.map(renderCharacter)}
         </View>
     );
@@ -46,33 +74,36 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         flexWrap: 'wrap',
-        marginBottom: 32,
-        position: 'relative',
-        zIndex: 1,
-    },
-    imageContainer: {
-        aspectRatio: 1,
-        marginBottom: 16,
-        borderRadius: 16,
-        position: 'relative',
-        zIndex: 1,
+        marginBottom: 0,
+        borderColor: 'green',
+        height: 329
     },
     selected: {
         width: 96,
-        height: 100
+        height: 259,
+        opacity: 1,
     },
     image: {
         width: 96,
-        height: 259
+        height: 259,
+        opacity: 0.6,
     },
     textWrapper: {
-        marginTop: 100,
+        marginTop: 'auto',
+        marginBottom: 10,
     },
-    characterName: {
+    defaultCharacterName: {
         color: '#51A4ED',
         fontWeight: '700',
         fontSize: 16,
+        textAlign: 'center',
+        marginBottom: 4
+    },
+    characterAbility: {
+        color: '#51A4ED',
+        fontWeight: '500',
+        fontSize: 12,
         textAlign: 'center'
-    }
+    },
 });
 export default CharacterCardView;

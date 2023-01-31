@@ -41,12 +41,13 @@ const CreateUserSheet = observer(() => {
 
     const onCreatePress = async () => {
         try {
+            await SheetManager.hide(SheetId.createUser);
             showLoader(true);
             await userService.setUser({nickName: nickname.trim(), device: selectedDevice!});
             showLoader(false);
-            await SheetManager.hide(SheetId.createUser);
         } catch (e) {
             showLoader(false);
+            await SheetManager.show(SheetId.createUser);
             showError(e as Error);
         }
     };
