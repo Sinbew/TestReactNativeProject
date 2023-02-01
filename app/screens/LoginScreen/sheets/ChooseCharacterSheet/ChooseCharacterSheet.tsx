@@ -14,10 +14,10 @@ import {IUserService} from '../../../../service/user/user-service-interface';
 import CharacterCardView from './views/CharacterCardView';
 import {LocalizationText} from '../../../../localizations/localization-text';
 import SettingsContext from '../../../../context/settings-context/settings-context';
+import {Color} from '../../../../constants/color';
 
 
 const ChooseCharacterSheet = observer(() => {
-
 
     const userState: UserState = useInjection(Type.UserState);
     const user: User = userState.getUser()!;
@@ -26,22 +26,16 @@ const ChooseCharacterSheet = observer(() => {
     const characterService: ICharacterService = useInjection(Type.CharacterService);
     const characters: Character[] = characterState.getCharacters();
     const [selectedCharacter, setSelectedCharacter] = useState<Character | undefined>(undefined);
-
     const {showLoader, showError} = useContext(SettingsContext);
-
-
     const buttonDisabled: boolean = !selectedCharacter;
-
     useEffect(() => {
         initCharacters();
     }, [characters.length]);
-
     const initCharacters = async () => {
         if (characters.length === 0) {
             await characterService.initCharacters();
         }
     };
-
     const createCharacter = async () => {
         try {
             await SheetManager.hide(SheetId.chooseCharacter);
@@ -55,8 +49,6 @@ const ChooseCharacterSheet = observer(() => {
             showError(e as Error);
         }
     };
-
-
     return (
         <ActionSheet
             containerStyle={styles.container}
@@ -69,7 +61,6 @@ const ChooseCharacterSheet = observer(() => {
                     <Text style={styles.subTitle}>{LocalizationText.pleaseSelectClan}</Text>
                 </View>
                 <ImageBackground source={require('../../../../../assets/images/logo-secondary.png')} style={styles.secondaryLogo}/>
-
                 {characters.length === 0 ? null :
                     <CharacterCardView
                         containerStyle={{marginTop: 40}}
@@ -91,12 +82,10 @@ const ChooseCharacterSheet = observer(() => {
         </ActionSheet>
     );
 });
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#242731',
-
+        backgroundColor: Color['#242731'],
     },
     mainWrapper: {
         paddingHorizontal: 24,
@@ -116,11 +105,10 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
         marginBottom: 8,
-
     },
     subTitle: {
         fontSize: 14,
-        color: '#808191',
+        color: Color['#808191'],
         maxWidth: 202,
         textAlign: 'center'
     },
@@ -134,12 +122,12 @@ const styles = StyleSheet.create({
         opacity: 0.1
     },
     createButton: {
-        backgroundColor: '#EFD548',
+        backgroundColor: Color['#EFD548'],
         padding: 20,
         borderRadius: 16,
     },
     createButtonDisabled: {
-        backgroundColor: 'rgba(239,213,72,0.5)',
+        backgroundColor: Color['#EFD5487F'],
         padding: 20,
         borderRadius: 16,
     },

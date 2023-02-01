@@ -9,20 +9,17 @@ import {useInjection} from 'inversify-react';
 import {Type} from '../../../../ioc/type';
 import {User} from '../../../../models/user/user';
 import {IUserService} from '../../../../service/user/user-service-interface';
-import DefaultAvatar from '../../../../components/icons/defaultAvatar';
+import DefaultAvatarIcon from '../../../../components/icons/DefaultAvatarIcon';
 import {ImagePickerResponse, launchImageLibrary} from 'react-native-image-picker';
 import SettingsContext from '../../../../context/settings-context/settings-context';
+import {Color} from '../../../../constants/color';
 
 const ChooseAvatarSheet = observer(() => {
-
     const userState: UserState = useInjection(Type.UserState);
     const user: User = userState.getUser()!;
     const userService: IUserService = useInjection(Type.UserService);
     const [avatar, setAvatar] = useState<string>('');
-
-
     const {showLoader} = useContext(SettingsContext);
-
     const buttonDisabled: boolean = !avatar;
     const showImageLibrary = async () => {
         try {
@@ -34,7 +31,7 @@ const ChooseAvatarSheet = observer(() => {
             const uri: string = asset.uri!;
             setAvatar(uri);
         } catch (e) {
-
+            console.error('Image library error', e);
         }
     };
     const onRefreshPress = async () => {
@@ -44,7 +41,6 @@ const ChooseAvatarSheet = observer(() => {
             throw new Error('Error with refreshing avatar');
         }
     };
-
     const createAvatar = async () => {
         try {
             await SheetManager.hide(SheetId.chooseAvatar);
@@ -69,10 +65,9 @@ const ChooseAvatarSheet = observer(() => {
                     <Text style={styles.subTitle}>{LocalizationText.updateAvatar}</Text>
                 </View>
                 <TouchableOpacity style={styles.avatarContainer} onPress={showImageLibrary}>
-                    {avatar ? <Image source={{uri: avatar}} style={{height: '100%', width: '100%'}}/> : <DefaultAvatar/>}
+                    {avatar ? <Image source={{uri: avatar}} style={{height: '100%', width: '100%'}}/> : <DefaultAvatarIcon/>}
                 </TouchableOpacity>
                 <View style={styles.buttonsContainer}>
-
                     <TouchableOpacity activeOpacity={0.8} style={styles.refresh}
                                       onPress={onRefreshPress}>
                         <Text style={styles.refreshText}>{LocalizationText.refresh}</Text>
@@ -91,20 +86,18 @@ const ChooseAvatarSheet = observer(() => {
         </ActionSheet>
     );
 });
-
 export default ChooseAvatarSheet;
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#242731',
+        backgroundColor: Color['#242731'],
 
     },
     mainWrapper: {
         paddingHorizontal: 24,
         paddingTop: 59,
         paddingBottom: 32,
-        // justifyContent: 'space-between',
         height: '100%'
     },
     titlesWrapper: {
@@ -122,14 +115,14 @@ const styles = StyleSheet.create({
     },
     subTitle: {
         fontSize: 14,
-        color: '#808191',
+        color: Color['#808191'],
         maxWidth: 202,
         textAlign: 'center'
     },
     avatarContainer: {
         width: 110,
         height: 110,
-        backgroundColor: '#808191',
+        backgroundColor: Color['#808191'],
         marginTop: 60,
         borderRadius: 16,
         alignSelf: 'center',
@@ -146,25 +139,24 @@ const styles = StyleSheet.create({
     },
     refreshText: {
         textTransform: 'uppercase',
-        color: '#EFD548'
+        color: Color['#EFD548']
     },
     createButton: {
-        backgroundColor: '#EFD548',
+        backgroundColor: Color['#EFD548'],
         padding: 20,
         borderRadius: 16,
         marginTop: 'auto'
     },
     createButtonDisabled: {
-        backgroundColor: 'rgba(239,213,72,0.5)',
+        backgroundColor: Color['#EFD5487F'],
         padding: 20,
         borderRadius: 16,
         marginTop: 'auto'
     },
     createButtonText: {
         textAlign: 'center',
-        color: '#181A1C',
+        color: Color['#181A1C'],
         fontWeight: '500',
         textTransform: 'uppercase'
     },
-
 });

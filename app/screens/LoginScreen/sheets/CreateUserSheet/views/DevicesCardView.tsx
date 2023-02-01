@@ -1,7 +1,7 @@
 import React from 'react';
 import {ImageBackground, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Device} from '../../../../../models/device/device';
-
+import {Color} from '../../../../../constants/color';
 
 export interface DevicesCardViewProps {
     devices: Device[];
@@ -10,13 +10,10 @@ export interface DevicesCardViewProps {
 }
 
 const DevicesCardView = (props: DevicesCardViewProps) => {
-
     const devices = props.devices;
-
     const onSelect = (device: Device) => {
         props.onSelectDevice(device);
     };
-
     const renderDevice = (device: Device, index: number) => {
         const selected: boolean = !!(props.selectedDevice && props.selectedDevice.type === device.type);
         return (
@@ -27,7 +24,6 @@ const DevicesCardView = (props: DevicesCardViewProps) => {
                 style={[styles.imageContainer, selected && styles.selected]}
             >
                 <ImageBackground style={styles.image} source={device.image as any}/>
-
             </TouchableOpacity>
         );
     };
@@ -52,7 +48,7 @@ const styles = StyleSheet.create({
         width: '47%',
         paddingHorizontal: 32,
         paddingVertical: 24,
-        backgroundColor: '#191B20',
+        backgroundColor: Color['#191B20'],
         borderWidth: 1,
         borderColor: 'transparent',
         marginBottom: 16,
@@ -61,7 +57,7 @@ const styles = StyleSheet.create({
         zIndex: 1,
     },
     selected: {
-        borderColor: '#EFD548',
+        borderColor: Color['#EFD548'],
     },
     image: {
         width: 78,
