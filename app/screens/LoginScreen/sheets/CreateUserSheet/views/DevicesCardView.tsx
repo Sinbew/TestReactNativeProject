@@ -1,7 +1,7 @@
 import React from 'react';
 import {ImageBackground, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Device} from '../../../../../models/device/device';
-import {colors} from '../../../../../constants/colors';
+import {Color} from '../../../../../constants/color';
 
 export interface DevicesCardViewProps {
     devices: Device[];
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         width: '47%',
         paddingHorizontal: 32,
         paddingVertical: 24,
-        backgroundColor: colors['#191B20'],
+        backgroundColor: Color['#191B20'],
         borderWidth: 1,
         borderColor: 'transparent',
         marginBottom: 16,
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         zIndex: 1,
     },
     selected: {
-        borderColor: colors['#EFD548'],
+        borderColor: Color['#EFD548'],
     },
     image: {
         width: 78,

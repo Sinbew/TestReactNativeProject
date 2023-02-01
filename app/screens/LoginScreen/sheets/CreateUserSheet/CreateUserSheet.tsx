@@ -14,7 +14,7 @@ import {IUserService} from '../../../../service/user/user-service-interface';
 import SettingsContext from '../../../../context/settings-context/settings-context';
 import {User} from '../../../../models/user/user';
 import {UserState} from '../../../../state/user/user-state';
-import {colors} from '../../../../constants/colors';
+import {Color} from '../../../../constants/color';
 
 
 const CreateUserSheet = observer(() => {
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 24,
         paddingTop: 15,
         paddingBottom: 49,
-        backgroundColor: colors['#242731'],
+        backgroundColor: Color['#242731'],
         borderRadius: 16,
         width: '90%',
         marginLeft: 'auto',
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     welcomeText: {
-        color: colors['#ffffff'],
+        color: Color['#ffffff'],
         fontWeight: '700',
         fontSize: 15,
     },
@@ -121,20 +121,20 @@ const styles = StyleSheet.create({
         padding: 10,
         width: 40,
         height: 40,
-        backgroundColor: colors['#191B20'],
+        backgroundColor: Color['#191B20'],
         marginLeft: 'auto'
     },
     closeIcon: {
-        color: colors['#ffffff'],
+        color: Color['#ffffff'],
         textAlign: 'center',
         fontWeight: '800'
     },
     inputForName: {
-        backgroundColor: colors['#191B20'],
+        backgroundColor: Color['#191B20'],
         marginTop: 20,
         padding: 20,
         borderRadius: 16,
-        color: colors['#ffffff']
+        color: Color['#ffffff']
     },
     yourDeviceText: {
         color: '#fff',
@@ -144,18 +144,18 @@ const styles = StyleSheet.create({
         fontWeight: '500'
     },
     createButton: {
-        backgroundColor: colors['#EFD548'],
+        backgroundColor: Color['#EFD548'],
         padding: 20,
         borderRadius: 16,
     },
     createButtonDisabled: {
-        backgroundColor: colors['#EFD5487F'],
+        backgroundColor: Color['#EFD5487F'],
         padding: 20,
         borderRadius: 16,
     },
     createButtonText: {
         textAlign: 'center',
-        color: colors['#181A1C'],
+        color: Color['#181A1C'],
         fontWeight: '500',
         textTransform: 'uppercase'
     }

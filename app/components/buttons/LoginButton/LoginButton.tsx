@@ -4,6 +4,8 @@ import GmailIcon from './icons/GmailIcon';
 import AppleIcon from './icons/AppleIcon';
 import FaceBookIcon from './icons/FacebookIcon';
 import {LoginType} from '../../../constants/login-type';
+import {Color} from '../../../constants/color';
+import {Font} from '../../../constants/fonts/font';
 
 interface LoginButtonProps extends TouchableOpacityProps {
     title: string;
@@ -42,12 +44,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 8,
         padding: 25,
-        backgroundColor: '#242731',
+        backgroundColor: Color['#242731'],
         borderRadius: 16,
     },
     loginButtonText: {
-        color: '#fff',
+        color: Color['#ffffff'],
         textAlign: 'center',
+        fontFamily: Font.rubik,
         fontWeight: '500',
         fontSize: 13,
     },

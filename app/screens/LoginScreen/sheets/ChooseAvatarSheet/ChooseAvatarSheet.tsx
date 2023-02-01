@@ -12,7 +12,7 @@ import {IUserService} from '../../../../service/user/user-service-interface';
 import DefaultAvatarIcon from '../../../../components/icons/DefaultAvatarIcon';
 import {ImagePickerResponse, launchImageLibrary} from 'react-native-image-picker';
 import SettingsContext from '../../../../context/settings-context/settings-context';
-import {colors} from '../../../../constants/colors';
+import {Color} from '../../../../constants/color';
 
 const ChooseAvatarSheet = observer(() => {
     const userState: UserState = useInjection(Type.UserState);
@@ -91,7 +91,7 @@ export default ChooseAvatarSheet;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors['#242731'],
+        backgroundColor: Color['#242731'],
 
     },
     mainWrapper: {
@@ -115,14 +115,14 @@ const styles = StyleSheet.create({
     },
     subTitle: {
         fontSize: 14,
-        color: colors['#808191'],
+        color: Color['#808191'],
         maxWidth: 202,
         textAlign: 'center'
     },
     avatarContainer: {
         width: 110,
         height: 110,
-        backgroundColor: colors['#808191'],
+        backgroundColor: Color['#808191'],
         marginTop: 60,
         borderRadius: 16,
         alignSelf: 'center',
@@ -139,23 +139,23 @@ const styles = StyleSheet.create({
     },
     refreshText: {
         textTransform: 'uppercase',
-        color: colors['#EFD548']
+        color: Color['#EFD548']
     },
     createButton: {
-        backgroundColor: colors['#EFD548'],
+        backgroundColor: Color['#EFD548'],
         padding: 20,
         borderRadius: 16,
         marginTop: 'auto'
     },
     createButtonDisabled: {
-        backgroundColor: colors['#EFD5487F'],
+        backgroundColor: Color['#EFD5487F'],
         padding: 20,
         borderRadius: 16,
         marginTop: 'auto'
     },
     createButtonText: {
         textAlign: 'center',
-        color: colors['#181A1C'],
+        color: Color['#181A1C'],
         fontWeight: '500',
         textTransform: 'uppercase'
     },

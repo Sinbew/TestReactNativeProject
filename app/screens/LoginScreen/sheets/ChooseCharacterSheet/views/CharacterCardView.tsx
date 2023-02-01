@@ -2,15 +2,13 @@ import React from 'react';
 import {Character} from '../../../../../models/character/character';
 import {ImageBackground, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle} from 'react-native';
 import {CharacterName} from '../../../../../models/character/character-name';
-import {colors} from '../../../../../constants/colors';
+import {Color} from '../../../../../constants/color';
 
 export interface CharacterCardViewProps {
     characters: Character[];
     onSelectCharacter: (character: Character) => void;
     selectedCharacter: Character | null;
-
     containerStyle?: StyleProp<ViewStyle>;
-
 }
 
 const CharacterCardView = (props: CharacterCardViewProps) => {
@@ -22,15 +20,15 @@ const CharacterCardView = (props: CharacterCardViewProps) => {
         switch (props.selectedCharacter?.name) {
             case CharacterName.PAKT:
                 return {
-                    color: colors['#91CD4B'],
+                    color: Color['#91CD4B'],
                 };
             case  CharacterName.DRAX:
                 return {
-                    color: colors['#51A4ED'],
+                    color: Color['#51A4ED'],
                 };
             case CharacterName.MAO:
                 return {
-                    color: colors['#FF4A1D'],
+                    color: Color['#FF4A1D'],
                 };
             default:
                 return {
@@ -71,8 +69,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         flexWrap: 'wrap',
-        marginBottom: 0,
-        borderColor: 'green',
         height: 329
     },
     selected: {
@@ -90,14 +86,14 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     defaultCharacterName: {
-        color: colors['#ffffff'],
+        color: Color['#ffffff'],
         fontWeight: '700',
         fontSize: 16,
         textAlign: 'center',
         marginBottom: 4
     },
     characterAbility: {
-        color: colors['#ffffff'],
+        color: Color['#ffffff'],
         fontWeight: '500',
         fontSize: 12,
         textAlign: 'center'

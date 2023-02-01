@@ -1,4 +1,4 @@
-export const fonts = {
+export const Font = {
     rubik: 'Rubik',
     poppins: 'Poppins'
 };

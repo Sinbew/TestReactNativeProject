@@ -12,8 +12,8 @@ import {UserState} from '../../state/user/user-state';
 import {User} from '../../models/user/user';
 import {useNavigation} from '@react-navigation/native';
 import {Route} from '../../constants/route';
-import {colors} from '../../constants/colors';
-import {fonts} from '../../constants/fonts/fonts';
+import {Color} from '../../constants/color';
+import {Font} from '../../constants/fonts/font';
 
 
 const LoginScreen = observer(() => {
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         borderWidth: 2,
-        backgroundColor: colors['#191B20'],
+        backgroundColor: Color['#191B20'],
         justifyContent: 'flex-end',
     },
     mainWrapper: {
@@ -97,9 +97,9 @@ const styles = StyleSheet.create({
         height: 217,
     },
     logoText: {
-        color: colors['#EFD548'],
+        color: Color['#EFD548'],
         fontWeight: '900',
-        fontFamily: fonts.rubik,
+        fontFamily: Font.rubik,
         fontSize: 22,
         letterSpacing: 24,
         transform: ([{translateX: 12}])
