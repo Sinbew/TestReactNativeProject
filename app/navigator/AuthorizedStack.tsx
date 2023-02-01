@@ -1,37 +1,15 @@
 import React from 'react';
-import {Route} from '../constants/route';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
-import SearchScreen from '../screens/SearchScreen/SearchScreen';
-import NotificationStack from './NotificationStack';
+import {Route} from '../constants/route';
 
-const Tab = createBottomTabNavigator();
+
+const Stack = createNativeStackNavigator();
 const AuthorizedStack = () => {
     return (
-        <Tab.Navigator>
-            <Tab.Screen
-                options={{
-                    headerShown: false,
-                }}
-                name={Route.HOME_SCREEN}
-                component={HomeScreen}
-            />
-            <Tab.Screen
-                options={{
-                    headerShown: false,
-                }}
-                name={Route.SEARCH_SCREEN}
-                component={SearchScreen}
-            />
-            <Tab.Screen
-                options={{
-                    headerShown: false,
-                }}
-                name={Route.NOTIFICATION_STACK}
-                component={NotificationStack}
-            />
-
-        </Tab.Navigator>
+        <Stack.Navigator>
+            <Stack.Screen name={Route.HOME_SCREEN} component={HomeScreen}/>
+        </Stack.Navigator>
     );
 };
 
