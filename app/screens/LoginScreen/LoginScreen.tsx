@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
-import LoginButton from '../../components/buttons/LoginButton/LoginButton';
+import LoginButton from './LoginButton/LoginButton';
 import {LoginType} from '../../constants/login-type';
 import {LocalizationText} from '../../localizations/localization-text';
 import {useInjection} from 'inversify-react';

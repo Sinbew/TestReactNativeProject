@@ -18,6 +18,11 @@ export const LocalizationText = {
     yeah: 'yeaaah',
     updateAvatar: 'You can update your Avatar for everybody',
     refresh: 'refresh',
-    letsGo: 'let\'s go'
+    letsGo: 'let\'s go',
+
+    menuBarAboutTitle: 'About',
+    menuBarSettingsTitle: 'Settings',
+    menuBarAboutText: 'About this app',
+    menuBarSettingsText: 'Configure your app'
 };
 
