@@ -5,17 +5,17 @@ import {CharacterAbilities} from '../../models/character/character-abilities';
 const DefaultCharacters: Character[] = [
     {
         name: CharacterName.PAKT,
-        image: require('../../../assets/images/soul-selector/pakt.png'),
+        image: require('../../../assets/images/character/pakt.png'),
         abilities: CharacterAbilities.SPEED
     },
     {
         name: CharacterName.DRAX,
-        image: require('../../../assets/images/soul-selector/drax.png'),
+        image: require('../../../assets/images/character/drax.png'),
         abilities: CharacterAbilities.ENDURANCE
     },
     {
         name: CharacterName.MAO,
-        image: require('../../../assets/images/soul-selector/mao.png'),
+        image: require('../../../assets/images/character/mao.png'),
         abilities: CharacterAbilities.POWER
     },
 ];

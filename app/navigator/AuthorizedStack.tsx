@@ -7,7 +7,7 @@ import {Route} from '../constants/route';
 const Stack = createNativeStackNavigator();
 const AuthorizedStack = () => {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{headerShown: false}}>
             <Stack.Screen name={Route.HOME_SCREEN} component={HomeScreen}/>
         </Stack.Navigator>
     );
