@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {Color} from '../../../../constants/color';
 import {Font} from '../../../../constants/fonts/font';
 
-const ProgressBar = () => {
+const ProgressBarView = () => {
     return (
         <View style={styles.container}>
             <View style={styles.statusBar}/>
@@ -11,7 +11,7 @@ const ProgressBar = () => {
         </View>
     );
 };
-export default ProgressBar;
+export default ProgressBarView;
 
 const styles = StyleSheet.create({
     container: {

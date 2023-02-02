@@ -12,7 +12,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Font} from '../../constants/fonts/font';
 import PointsView from './views/PointsView/PointsView';
 import TeamView from './views/TeamView/TeamView';
-import ProgressBar from './views/ProgressBarView/ProgressBar';
+import ProgressBarView from './views/ProgressBarView/ProgressBarView';
 import MenuBarView from './views/MenuBarView/MenuBarView';
 
 const HomeScreen = () => {
@@ -51,7 +51,7 @@ const HomeScreen = () => {
                         <Text style={styles.characterNickname}>{user.nickName}</Text>
                         <PointsView/>
                         <TeamView/>
-                        <ProgressBar/>
+                        <ProgressBarView/>
                     </View>
                     <View style={styles.characterWrapper}>
                         <Image
