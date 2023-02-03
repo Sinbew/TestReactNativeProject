@@ -1,8 +1,8 @@
 import React from 'react';
-import {Character} from '../../../../../models/character/character';
+import {Character} from '../../../../models/character/character';
 import {ImageBackground, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle} from 'react-native';
-import {CharacterName} from '../../../../../models/character/character-name';
-import {Color} from '../../../../../constants/color';
+import {CharacterName} from '../../../../models/character/character-name';
+import {Color} from '../../../../constants/color';
 
 export interface CharacterCardViewProps {
     characters: Character[];

@@ -23,6 +23,9 @@ export const LocalizationText = {
     menuBarAboutTitle: 'About',
     menuBarSettingsTitle: 'Settings',
     menuBarAboutText: 'About this app',
-    menuBarSettingsText: 'Configure your app'
+    menuBarSettingsText: 'Configure your app',
+
+    settingsScreenText: 'Settings',
+    goBack: 'back'
 };
 

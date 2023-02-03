@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
 import LoginButton from './LoginButton/LoginButton';
 import {LoginType} from '../../constants/login-type';
@@ -11,20 +11,61 @@ import {observer} from 'mobx-react-lite';
 import {UserState} from '../../state/user/user-state';
 import {User} from '../../models/user/user';
 import {useNavigation} from '@react-navigation/native';
-import {Route} from '../../constants/route';
 import {Color} from '../../constants/color';
 import {Font} from '../../constants/fonts/font';
+import {Device} from '../../models/device/device';
+import {IUserService} from '../../service/user/user-service-interface';
+import SettingsContext from '../../context/settings-context/settings-context';
+import {Character} from '../../models/character/character';
+import {Route} from '../../constants/route';
 
 
 const LoginScreen = observer(() => {
 
     const userState: UserState = useInjection(Type.UserState);
+    const userService: IUserService = useInjection(Type.UserService);
     const user: User | null = userState.getUser();
+    const {showError} = useContext(SettingsContext);
     const navigation = useNavigation();
 
     useEffect(() => {
         checkUser();
     }, [user]);
+
+    const chooseNicknameDevice = async (nickname: string, device: Device) => {
+        try {
+            const userToCreate: User = {nickName: nickname.trim(), device: device};
+            await userService.setUser(userToCreate);
+            await SheetManager.hide(SheetId.chooseNicknameDevice);
+        } catch (e) {
+            await SheetManager.hide(SheetId.chooseNicknameDevice);
+            showError(e as Error);
+        }
+    };
+
+    const chooseCharacter = async (character: Character) => {
+        try {
+            const existingUser: User = user!;
+            const updatedUser: User = {...existingUser, character: character};
+            await userService.setUser(updatedUser);
+            await SheetManager.hide(SheetId.chooseCharacter);
+        } catch (e) {
+            await SheetManager.hide(SheetId.chooseCharacter);
+            showError(e as Error);
+        }
+    };
+
+    const chosenAvatar = async (avatar: string) => {
+        try {
+            const existingUser: User = user!;
+            const updatedAvatar: User = {...existingUser, avatar: avatar};
+            await userService.setUser(updatedAvatar);
+            await SheetManager.hide(SheetId.chooseAvatar);
+        } catch (e) {
+            await SheetManager.hide(SheetId.chooseAvatar);
+            showError(e as Error);
+        }
+    };
 
     const checkUser = async () => {
         try {
@@ -32,15 +73,16 @@ const LoginScreen = observer(() => {
                 return;
             }
             if (!user.nickName || !user.device) {
-                await SheetManager.show(SheetId.createUser);
+                await showNicknameDeviceSheet();
                 return;
             }
             if (!user.character) {
-                await SheetManager.show(SheetId.chooseCharacter);
+                console.warn('we are here');
+                await showChooseCharacterSheet();
                 return;
             }
             if (!user.avatar) {
-                await SheetManager.show(SheetId.chooseAvatar);
+                await showChosenAvatarSheet();
                 return;
             }
             navigation.navigate(Route.AUTHORIZED_STACK as never);
@@ -49,8 +91,40 @@ const LoginScreen = observer(() => {
         }
     };
 
-    const onPress = async () => {
-        await SheetManager.show(SheetId.createUser);
+    const showNicknameDeviceSheet = async () => {
+        try {
+            await SheetManager.show(SheetId.chooseNicknameDevice, {
+                payload: {
+                    nickname: user ? user.nickName : null,
+                    device: user ? user.device : null,
+                    updateNicknameAndDevice: chooseNicknameDevice
+                }
+            });
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    const showChooseCharacterSheet = async () => {
+        try {
+            await SheetManager.show(SheetId.chooseCharacter, {
+                payload: {
+                    character: user?.character,
+                    updateCharacter: chooseCharacter
+                }
+            });
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    const showChosenAvatarSheet = async () => {
+        await SheetManager.show(SheetId.chooseAvatar, {
+            payload: {
+                avatar: user?.avatar,
+                updateAvatar: chosenAvatar
+            }
+        });
     };
 
     return (
@@ -66,9 +140,9 @@ const LoginScreen = observer(() => {
                 <Text style={styles.logoText}>LAZII</Text>
             </View>
             <View style={styles.mainWrapper}>
-                <LoginButton onPress={onPress} loginType={LoginType.APPLE} title={LocalizationText.apple_id}/>
-                <LoginButton onPress={onPress} loginType={LoginType.FACEBOOK} title={LocalizationText.facebook}/>
-                <LoginButton onPress={onPress} loginType={LoginType.GOOGLE} title={LocalizationText.google}/>
+                <LoginButton onPress={showNicknameDeviceSheet} loginType={LoginType.APPLE} title={LocalizationText.apple_id}/>
+                <LoginButton onPress={showNicknameDeviceSheet} loginType={LoginType.FACEBOOK} title={LocalizationText.facebook}/>
+                <LoginButton onPress={showNicknameDeviceSheet} loginType={LoginType.GOOGLE} title={LocalizationText.google}/>
             </View>
         </View>
     );

@@ -1,66 +1,95 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import ActionSheet, {SheetManager} from 'react-native-actions-sheet';
-import SheetId from '../../../../constants/sheet-id';
+import React, {useEffect, useState} from 'react';
+import {ActivityIndicator, ImageBackground, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View} from 'react-native';
+import ActionSheet, {SheetProps} from 'react-native-actions-sheet';
+import SheetId from '../../../constants/sheet-id';
 import {observer} from 'mobx-react-lite';
-import {Character} from '../../../../models/character/character';
-import {CharacterState} from '../../../../state/character/character-state';
+import {Character} from '../../../models/character/character';
+import {CharacterState} from '../../../state/character/character-state';
 import {useInjection} from 'inversify-react';
-import {Type} from '../../../../ioc/type';
-import {ICharacterService} from '../../../../service/character/character-service-interface';
-import {UserState} from '../../../../state/user/user-state';
-import {User} from '../../../../models/user/user';
-import {IUserService} from '../../../../service/user/user-service-interface';
+import {Type} from '../../../ioc/type';
+import {ICharacterService} from '../../../service/character/character-service-interface';
 import CharacterCardView from './views/CharacterCardView';
-import {LocalizationText} from '../../../../localizations/localization-text';
-import SettingsContext from '../../../../context/settings-context/settings-context';
-import {Color} from '../../../../constants/color';
+import {LocalizationText} from '../../../localizations/localization-text';
+import {Color} from '../../../constants/color';
+
+export interface ChooseCharacterSheetProps {
+    updateCharacter: (character: Character) => Promise<void>;
+    character: Character | null;
+}
 
 
-const ChooseCharacterSheet = observer(() => {
+const ChooseCharacterSheet = observer((props: SheetProps<ChooseCharacterSheetProps>) => {
 
-    const userState: UserState = useInjection(Type.UserState);
-    const user: User = userState.getUser()!;
-    const userService: IUserService = useInjection(Type.UserService);
     const characterState: CharacterState = useInjection(Type.CharacterState);
     const characterService: ICharacterService = useInjection(Type.CharacterService);
     const characters: Character[] = characterState.getCharacters();
-    const [selectedCharacter, setSelectedCharacter] = useState<Character | undefined>(undefined);
-    const {showLoader, showError} = useContext(SettingsContext);
+
+    const updateCharacter = props.payload!.updateCharacter;
+    const payloadCharacter: Character | null = props.payload!.character;
+
+    const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(payloadCharacter);
+    const [loading, setLoading] = useState<boolean>(false);
+
     const buttonDisabled: boolean = !selectedCharacter;
+
+    const {width, height} = useWindowDimensions();
+
+
     useEffect(() => {
         initCharacters();
     }, [characters.length]);
+
     const initCharacters = async () => {
         if (characters.length === 0) {
             await characterService.initCharacters();
         }
     };
-    const createCharacter = async () => {
+
+    const onPress = async () => {
         try {
-            await SheetManager.hide(SheetId.chooseCharacter);
-            const updatedUser: User = {...user, character: selectedCharacter};
-            showLoader(true);
-            await userService.setUser(updatedUser);
-            showLoader(false);
+            setLoading(true);
+            await updateCharacter(selectedCharacter!);
+            setLoading(false);
         } catch (e) {
-            showLoader(false);
-            await SheetManager.show(SheetId.chooseCharacter);
-            showError(e as Error);
+            setLoading(false);
         }
     };
+    // const createCharacter = async () => {
+    //     try {
+    //         await SheetManager.hide(SheetId.chooseCharacter);
+    //         const updatedUser: User = {...user, character: selectedCharacter};
+    //         showLoader(true);
+    //         await userService.setUser(updatedUser);
+    //         showLoader(false);
+    //     } catch (e) {
+    //         showLoader(false);
+    //         await SheetManager.show(SheetId.chooseCharacter);
+    //         showError(e as Error);
+    //     }
+    // };
+
+    const LoaderView = () => {
+        return (
+            <View style={[styles.loader, {width, height}]}>
+                <ActivityIndicator/>
+            </View>
+        );
+    };
+
+
     return (
         <ActionSheet
             containerStyle={styles.container}
             drawUnderStatusBar
             id={SheetId.chooseCharacter}
         >
+            {loading ? <LoaderView/> : null}
             <View style={styles.mainWrapper}>
                 <View style={styles.titlesWrapper}>
                     <Text style={styles.title}>{LocalizationText.yourSoul}</Text>
                     <Text style={styles.subTitle}>{LocalizationText.pleaseSelectClan}</Text>
                 </View>
-                <ImageBackground source={require('../../../../../assets/images/logo-secondary.png')} style={styles.secondaryLogo}/>
+                <ImageBackground source={require('../../../../assets/images/logo-secondary.png')} style={styles.secondaryLogo}/>
                 {characters.length === 0 ? null :
                     <CharacterCardView
                         containerStyle={{marginTop: 40}}
@@ -72,7 +101,7 @@ const ChooseCharacterSheet = observer(() => {
                 <TouchableOpacity
                     activeOpacity={0.8}
                     style={buttonDisabled ? styles.createButtonDisabled : styles.createButton}
-                    onPress={createCharacter}>
+                    onPress={onPress}>
                     <Text
                         style={styles.createButtonText}>
                         {LocalizationText.yeah}
@@ -136,6 +165,12 @@ const styles = StyleSheet.create({
         color: '#181A1C',
         fontWeight: '500',
         textTransform: 'uppercase'
+    },
+    loader: {
+        position: 'absolute',
+        zIndex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
 export default ChooseCharacterSheet;

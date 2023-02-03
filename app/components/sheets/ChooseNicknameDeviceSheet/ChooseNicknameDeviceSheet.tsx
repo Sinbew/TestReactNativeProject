@@ -1,34 +1,37 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {useInjection} from 'inversify-react';
-import {Type} from '../../../../ioc/type';
-import ActionSheet, {SheetManager} from 'react-native-actions-sheet';
+import {Type} from '../../../ioc/type';
+import ActionSheet, {SheetManager, SheetProps} from 'react-native-actions-sheet';
 import DevicesCardView from './views/DevicesCardView';
-import SheetId from '../../../../constants/sheet-id';
-import {DeviceState} from '../../../../state/device/device-state';
-import {Device} from '../../../../models/device/device';
-import {IDeviceService} from '../../../../service/device/device-service-interface';
+import SheetId from '../../../constants/sheet-id';
+import {DeviceState} from '../../../state/device/device-state';
+import {Device} from '../../../models/device/device';
+import {IDeviceService} from '../../../service/device/device-service-interface';
 import {observer} from 'mobx-react-lite';
-import {LocalizationText} from '../../../../localizations/localization-text';
-import {IUserService} from '../../../../service/user/user-service-interface';
-import SettingsContext from '../../../../context/settings-context/settings-context';
-import {User} from '../../../../models/user/user';
-import {UserState} from '../../../../state/user/user-state';
-import {Color} from '../../../../constants/color';
+import {LocalizationText} from '../../../localizations/localization-text';
+import {Color} from '../../../constants/color';
 
 
-const CreateUserSheet = observer(() => {
+export interface ChooseNicknameDeviceSheetProps {
+    nickName: string | null;
+    device: Device | null;
+    updateNicknameAndDevice: (nickname: string, device: Device) => Promise<void>;
+}
 
-    const userState: UserState = useInjection(Type.UserState);
-    const user: User | null = userState.getUser();
-    const userService: IUserService = useInjection(Type.UserService);
+const ChooseNicknameDeviceSheet = observer((props: SheetProps<ChooseNicknameDeviceSheetProps>) => {
+
     const deviceService: IDeviceService = useInjection(Type.DeviceService);
     const deviceState: DeviceState = useInjection(Type.DeviceState);
     const devices: Device[] = deviceState.getDevices();
-    const [nickname, setNickname] = useState<string>(user ? user.nickName : '');
-    const [selectedDevice, setSelectedDevice] = useState<Device | null>(user ? user.device : null);
-    const {showLoader, showError} = useContext(SettingsContext);
-    const buttonDisabled: boolean = !selectedDevice || !nickname.trim();
+
+    const initialNickname: string | null = props.payload!.nickName;
+    const initialDevice: Device | null = props.payload!.device;
+    const updateNicknameAndDevice = props.payload!.updateNicknameAndDevice;
+
+    const [nickname, setNickname] = useState<string | null>(initialNickname);
+    const [selectedDevice, setSelectedDevice] = useState<Device | null>(initialDevice);
+    const buttonDisabled: boolean = !selectedDevice || !nickname || nickname.trim().length === 0;
 
     useEffect(() => {
         initDevices();
@@ -39,24 +42,12 @@ const CreateUserSheet = observer(() => {
             deviceService.initDevices();
         }
     };
-    const onCreatePress = async () => {
-        try {
-            await SheetManager.hide(SheetId.createUser);
-            showLoader(true);
-            await userService.setUser({nickName: nickname.trim(), device: selectedDevice!});
-            showLoader(false);
-        } catch (e) {
-            showLoader(false);
-            await SheetManager.show(SheetId.createUser);
-            showError(e as Error);
-        }
-    };
     const onClosePress = async () => {
-        await SheetManager.hide(SheetId.createUser);
+        await SheetManager.hide(SheetId.chooseNicknameDevice);
     };
 
     return (
-        <ActionSheet containerStyle={styles.container} id={SheetId.createUser}>
+        <ActionSheet containerStyle={styles.container} id={SheetId.chooseNicknameDevice}>
             <View style={styles.mainContainer}>
                 <View style={styles.headWrapper}>
                     <Text style={styles.welcomeText}>{LocalizationText.welcome}</Text>
@@ -65,7 +56,7 @@ const CreateUserSheet = observer(() => {
                     </TouchableOpacity>
                 </View>
                 <TextInput
-                    value={nickname}
+                    value={nickname || ''}
                     style={styles.inputForName}
                     placeholder={LocalizationText.nickName}
                     placeholderTextColor={'#808191'}
@@ -76,7 +67,7 @@ const CreateUserSheet = observer(() => {
                     <DevicesCardView selectedDevice={selectedDevice} onSelectDevice={setSelectedDevice} devices={devices}/>}
                 <TouchableOpacity
                     disabled={buttonDisabled}
-                    onPress={onCreatePress}
+                    onPress={() => updateNicknameAndDevice(nickname!, selectedDevice!)}
                     activeOpacity={0.8}
                     style={buttonDisabled ? styles.createButtonDisabled : styles.createButton}
                 >
@@ -161,4 +152,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default CreateUserSheet;
+export default ChooseNicknameDeviceSheet;

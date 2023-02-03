@@ -1,7 +1,7 @@
 import React from 'react';
 import {ImageBackground, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Device} from '../../../../../models/device/device';
-import {Color} from '../../../../../constants/color';
+import {Device} from '../../../../models/device/device';
+import {Color} from '../../../../constants/color';
 
 export interface DevicesCardViewProps {
     devices: Device[];
