@@ -5,6 +5,7 @@ export const LocalizationText = {
 
     welcome: 'Welcome',
     create: 'Create',
+    update: 'Update',
     nickName: 'Nickname',
     yourDevice: 'Your device',
 
@@ -16,13 +17,20 @@ export const LocalizationText = {
         power: 'power'
     },
     yeah: 'yeaaah',
+    updateCharacter: 'Update Character',
+
     updateAvatar: 'You can update your Avatar for everybody',
     refresh: 'refresh',
     letsGo: 'let\'s go',
+    updatePicture: 'Update',
 
     menuBarAboutTitle: 'About',
     menuBarSettingsTitle: 'Settings',
     menuBarAboutText: 'About this app',
-    menuBarSettingsText: 'Configure your app'
+    menuBarSettingsText: 'Configure your app',
+
+    settingsScreenText: 'Settings',
+    goBack: 'Back',
+    logout: 'Logout'
 };
 

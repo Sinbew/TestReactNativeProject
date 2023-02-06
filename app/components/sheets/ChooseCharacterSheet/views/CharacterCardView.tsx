@@ -1,8 +1,8 @@
 import React from 'react';
-import {Character} from '../../../../../models/character/character';
+import {Character} from '../../../../models/character/character';
 import {ImageBackground, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle} from 'react-native';
-import {CharacterName} from '../../../../../models/character/character-name';
-import {Color} from '../../../../../constants/color';
+import {CharacterName} from '../../../../models/character/character-name';
+import {Color} from '../../../../constants/color';
 
 export interface CharacterCardViewProps {
     characters: Character[];
@@ -44,7 +44,7 @@ const CharacterCardView = (props: CharacterCardViewProps) => {
                 activeOpacity={0.8}
                 onPress={() => onSelect(character)}
             >
-                <ImageBackground style={[styles.image, selected && styles.selected]} source={character.image as any}/>
+                <ImageBackground style={[styles.image, selected && styles.selected]} source={character.image as never}/>
                 <View style={styles.textWrapper}>
                     <Text style={[styles.defaultCharacterName, textStyle()]}>
                         {props.selectedCharacter?.name === character.name ? character.name : ''}

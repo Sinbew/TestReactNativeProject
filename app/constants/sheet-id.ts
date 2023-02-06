@@ -1,5 +1,5 @@
 const SheetId = {
-    createUser: 'createUser',
+    chooseNicknameDevice: 'chooseNicknameDevice',
     chooseCharacter: 'chooseCharacter',
     chooseAvatar: 'chooseAvatar'
 };

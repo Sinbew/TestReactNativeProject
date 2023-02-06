@@ -1,10 +1,10 @@
-import CreateUserSheet from '../../screens/LoginScreen/sheets/CreateUserSheet/CreateUserSheet';
 import SheetId from '../../constants/sheet-id';
 import {registerSheet} from 'react-native-actions-sheet';
-import ChooseCharacterSheet from '../../screens/LoginScreen/sheets/ChooseCharacterSheet/ChooseCharacterSheet';
-import ChooseAvatarSheet from '../../screens/LoginScreen/sheets/ChooseAvatarSheet/ChooseAvatarSheet';
+import ChooseCharacterSheet from './ChooseCharacterSheet/ChooseCharacterSheet';
+import ChooseAvatarSheet from './ChooseAvatarSheet/ChooseAvatarSheet';
+import ChooseNicknameDeviceSheet from './ChooseNicknameDeviceSheet/ChooseNicknameDeviceSheet';
 
-registerSheet(SheetId.createUser, CreateUserSheet);
+registerSheet(SheetId.chooseNicknameDevice, ChooseNicknameDeviceSheet);
 registerSheet(SheetId.chooseCharacter, ChooseCharacterSheet);
 registerSheet(SheetId.chooseAvatar, ChooseAvatarSheet);
 export {};

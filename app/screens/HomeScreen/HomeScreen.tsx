@@ -1,5 +1,5 @@
-import React from 'react';
-import {Image, ScrollView, StyleSheet, Text, useWindowDimensions, View} from 'react-native';
+import React, {useContext, useEffect} from 'react';
+import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View} from 'react-native';
 import {Color} from '../../constants/color';
 import {User} from '../../models/user/user';
 import {useInjection} from 'inversify-react';
@@ -14,8 +14,14 @@ import PointsView from './views/PointsView/PointsView';
 import TeamView from './views/TeamView/TeamView';
 import ProgressBarView from './views/ProgressBarView/ProgressBarView';
 import MenuBarView from './views/MenuBarView/MenuBarView';
+import {useNavigation} from '@react-navigation/native';
+import {Route} from '../../constants/route';
+import {observer} from 'mobx-react-lite';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import SettingsContext from '../../context/settings-context/settings-context';
+import {LocalizationText} from '../../localizations/localization-text';
 
-const HomeScreen = () => {
+const HomeScreen = observer(() => {
 
     const userState: UserState = useInjection(Type.UserState);
     const user: User = userState.getUser()!;
@@ -24,12 +30,44 @@ const HomeScreen = () => {
     const characterViewProps: CharacterViewProps = getCharacterViewProps(character)!;
     const {height} = useWindowDimensions();
     const insets = useSafeAreaInsets();
+    const navigation = useNavigation();
+    const {showLoader} = useContext(SettingsContext);
 
+    useEffect(() => {
+    }, [user]);
     const onAboutPress = () => {
         console.warn('About');
     };
     const onSettingsPress = () => {
-        console.warn('Settings');
+        navigation.navigate(Route.SETTINGS_SCREEN as never);
+    };
+    const renderDevice = () => {
+        switch (user.device.type) {
+            case 'GARMIN':
+                return require('../../../assets/images/devices/garmin.png');
+            case 'POLAR':
+                return require('../../../assets/images/devices/polar.png');
+            case 'HEALTHKIT':
+                return require('../../../assets/images/devices/healtkit.png');
+            case 'SUUNTO':
+                return require('../../../assets/images/devices/suunto.png');
+            default :
+                return null;
+        }
+
+    };
+    const logOut = async () => {
+        try {
+            showLoader(true);
+            await AsyncStorage.clear();
+            navigation.navigate(Route.NOT_AUTHORIZED_STACK as never);
+            userState.setUser(null);
+            showLoader(false);
+        } catch (e) {
+            console.warn(e);
+            showLoader(false);
+            throw new Error;
+        }
     };
 
     return (<View style={styles.container}>
@@ -68,10 +106,17 @@ const HomeScreen = () => {
                     onAboutPress={onAboutPress}
                     onSettingsPress={onSettingsPress}
                 />
+                <TouchableOpacity activeOpacity={0.8} style={styles.deviceWrapper}>
+                    <Image source={renderDevice()} resizeMode='contain' style={{width: 100, height: 100}}/>
+                    <Text style={styles.deviceText}>Your device</Text>
+                </TouchableOpacity>
+                <TouchableOpacity activeOpacity={0.8} onPress={logOut} style={styles.logoutButton}>
+                    <Text style={styles.logoutButtonText}>{LocalizationText.logout}</Text>
+                </TouchableOpacity>
             </View>
         </ScrollView>
     </View>);
-};
+});
 
 const styles = StyleSheet.create({
     container: {
@@ -133,6 +178,36 @@ const styles = StyleSheet.create({
         height: '100%',
         alignSelf: 'flex-end'
     },
+    deviceWrapper: {
+        width: '100%',
+        backgroundColor: Color['#242731'],
+        borderRadius: 16,
+        paddingHorizontal: 20,
+        paddingVertical: 12,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    deviceText: {
+        color: Color['#ffffff'],
+        fontFamily: Font.rubik,
+        fontWeight: '700',
+        fontSize: 16,
+        textTransform: 'uppercase',
+        marginRight: 10
+    },
+    logoutButton: {
+        backgroundColor: Color['#242731'],
+        padding: 15,
+        borderRadius: 16,
+        marginTop: 20
+    },
+    logoutButtonText: {
+        textAlign: 'center',
+        color: Color['#FF4A1D'],
+        fontWeight: '700',
+        textTransform: 'uppercase'
+    }
 });
 
 export default HomeScreen;
