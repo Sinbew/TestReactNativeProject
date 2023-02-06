@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         color: Color['#ffffff'],
         fontFamily: Font.rubik,
         fontSize: 14,
-        fontWeight: '500',
+        fontWeight: '400',
         marginLeft: 15
     }
 });

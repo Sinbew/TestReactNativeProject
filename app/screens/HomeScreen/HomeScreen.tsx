@@ -53,7 +53,6 @@ const HomeScreen = observer(() => {
 
     };
 
-
     return (<View style={styles.container}>
         <Image
             resizeMode='stretch'

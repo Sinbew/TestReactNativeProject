@@ -44,7 +44,7 @@ const CharacterCardView = (props: CharacterCardViewProps) => {
                 activeOpacity={0.8}
                 onPress={() => onSelect(character)}
             >
-                <ImageBackground style={[styles.image, selected && styles.selected]} source={character.image as any}/>
+                <ImageBackground style={[styles.image, selected && styles.selected]} source={character.image as never}/>
                 <View style={styles.textWrapper}>
                     <Text style={[styles.defaultCharacterName, textStyle()]}>
                         {props.selectedCharacter?.name === character.name ? character.name : ''}

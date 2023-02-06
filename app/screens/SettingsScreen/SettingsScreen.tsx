@@ -21,7 +21,6 @@ import sheetId from '../../constants/sheet-id';
 import {Device} from '../../models/device/device';
 
 const SettingsScreen = observer(() => {
-
     const userService: IUserService = useInjection(Type.UserService);
     const userState: UserState = useInjection(Type.UserState);
     const user: User = userState.getUser()!;
@@ -32,9 +31,16 @@ const SettingsScreen = observer(() => {
     const {showError} = useContext(SettingsContext);
     const navigation = useNavigation();
 
-    const updateNicknameAndDevice = async (incomeNickname: string, incomeDevice: Device) => {
+    const updateNicknameAndDevice = async (
+        incomeNickname: string,
+        incomeDevice: Device
+    ) => {
         try {
-            const updatedUser: User = {...user, nickName: incomeNickname.trim(), device: incomeDevice};
+            const updatedUser: User = {
+                ...user,
+                nickName: incomeNickname.trim(),
+                device: incomeDevice,
+            };
             await userService.setUser(updatedUser);
             navigation.goBack();
             await SheetManager.hide(SheetId.chooseNicknameDevice);
@@ -61,15 +67,14 @@ const SettingsScreen = observer(() => {
         await SheetManager.hide(sheetId.chooseAvatar);
     };
 
-
     const onChangeNicknameAndDevice = async () => {
         try {
             await SheetManager.show(SheetId.chooseNicknameDevice, {
                 payload: {
                     nickName: nickName,
                     device: device,
-                    updateNicknameAndDevice: updateNicknameAndDevice
-                }
+                    updateNicknameAndDevice: updateNicknameAndDevice,
+                },
             });
         } catch (e) {
             console.error(e);
@@ -80,8 +85,8 @@ const SettingsScreen = observer(() => {
             await SheetManager.show(SheetId.chooseCharacter, {
                 payload: {
                     character: character,
-                    updateCharacter: updateCharacter
-                }
+                    updateCharacter: updateCharacter,
+                },
             });
         } catch (e) {
             console.error(e);
@@ -93,7 +98,7 @@ const SettingsScreen = observer(() => {
                 payload: {
                     avatar: avatar,
                     updateAvatar: updateAvatar,
-                }
+                },
             });
         } catch (e) {
             console.error(e);
@@ -111,14 +116,23 @@ const SettingsScreen = observer(() => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScreenHeader
-                title='Settings'
-                onBackPress={() => navigation.goBack()}
-            />
+            <ScreenHeader title='Settings' onBackPress={() => navigation.goBack()}/>
             <ScrollView style={styles.mainWrapper}>
-                <SettingsMenuItemView title='Change Nickname and Device' onItemPress={onChangeNicknameAndDevice} icon='nickname/device'/>
-                <SettingsMenuItemView title='Change Character' onItemPress={onChangeCharacter} icon='character'/>
-                <SettingsMenuItemView title='Change Avatar' onItemPress={onChangeAvatar} icon='avatar'/>
+                <SettingsMenuItemView
+                    title='Change Nickname and Device'
+                    onItemPress={onChangeNicknameAndDevice}
+                    icon='nickname/device'
+                />
+                <SettingsMenuItemView
+                    title='Change Character'
+                    onItemPress={onChangeCharacter}
+                    icon='character'
+                />
+                <SettingsMenuItemView
+                    title='Change Avatar'
+                    onItemPress={onChangeAvatar}
+                    icon='avatar'
+                />
                 <Button title='Reset' onPress={reset}/>
             </ScrollView>
         </SafeAreaView>
@@ -135,7 +149,7 @@ const styles = StyleSheet.create({
     head: {
         flexDirection: 'row',
         alignItems: 'baseline',
-        paddingHorizontal: 16
+        paddingHorizontal: 16,
     },
     goBack: {
         color: Color['#808191'],
@@ -155,10 +169,10 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: '100%',
         height: 1,
-        backgroundColor: Color['#242731']
+        backgroundColor: Color['#242731'],
     },
     mainWrapper: {
         paddingHorizontal: 16,
         paddingTop: 24,
-    }
+    },
 });

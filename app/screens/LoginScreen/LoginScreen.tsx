@@ -19,9 +19,7 @@ import SettingsContext from '../../context/settings-context/settings-context';
 import {Character} from '../../models/character/character';
 import {Route} from '../../constants/route';
 
-
 const LoginScreen = observer(() => {
-
     const userState: UserState = useInjection(Type.UserState);
     const userService: IUserService = useInjection(Type.UserService);
     const user: User | null = userState.getUser();
@@ -73,16 +71,21 @@ const LoginScreen = observer(() => {
                 return;
             }
             if (!user.nickName || !user.device) {
-                await showNicknameDeviceSheet();
+                setTimeout(async () => {
+                    await showNicknameDeviceSheet();
+                }, 500);
                 return;
             }
             if (!user.character) {
-                console.warn('we are here');
-                await showChooseCharacterSheet();
+                setTimeout(async () => {
+                    await showChooseCharacterSheet();
+                }, 500);
                 return;
             }
             if (!user.avatar) {
-                await showChosenAvatarSheet();
+                setTimeout(async () => {
+                    await showChosenAvatarSheet();
+                }, 500);
                 return;
             }
             navigation.navigate(Route.AUTHORIZED_STACK as never);
@@ -90,59 +93,69 @@ const LoginScreen = observer(() => {
             throw e;
         }
     };
-
     const showNicknameDeviceSheet = async () => {
         try {
             await SheetManager.show(SheetId.chooseNicknameDevice, {
                 payload: {
                     nickname: user ? user.nickName : null,
                     device: user ? user.device : null,
-                    updateNicknameAndDevice: chooseNicknameDevice
-                }
+                    updateNicknameAndDevice: chooseNicknameDevice,
+                },
             });
         } catch (e) {
             console.error(e);
         }
     };
-
     const showChooseCharacterSheet = async () => {
         try {
             await SheetManager.show(SheetId.chooseCharacter, {
                 payload: {
                     character: user?.character,
-                    updateCharacter: chooseCharacter
-                }
+                    updateCharacter: chooseCharacter,
+                },
             });
         } catch (e) {
             console.error(e);
         }
     };
-
     const showChosenAvatarSheet = async () => {
         await SheetManager.show(SheetId.chooseAvatar, {
             payload: {
                 avatar: user?.avatar,
-                updateAvatar: chosenAvatar
-            }
+                updateAvatar: chosenAvatar,
+            },
         });
     };
-
     return (
-        <View
-            style={styles.container}>
+        <View style={styles.container}>
             <ImageBackground
                 source={require('../../../assets/images/login_background.png')}
                 resizeMode='cover'
                 style={styles.backgroundImage}
             />
-            <Image source={require('../../../assets/images/logo.png')} style={styles.logo}/>
+            <Image
+                source={require('../../../assets/images/logo.png')}
+                style={styles.logo}
+            />
             <View style={styles.logoTextWrapper}>
                 <Text style={styles.logoText}>LAZII</Text>
             </View>
             <View style={styles.mainWrapper}>
-                <LoginButton onPress={showNicknameDeviceSheet} loginType={LoginType.APPLE} title={LocalizationText.apple_id}/>
-                <LoginButton onPress={showNicknameDeviceSheet} loginType={LoginType.FACEBOOK} title={LocalizationText.facebook}/>
-                <LoginButton onPress={showNicknameDeviceSheet} loginType={LoginType.GOOGLE} title={LocalizationText.google}/>
+                <LoginButton
+                    onPress={showNicknameDeviceSheet}
+                    loginType={LoginType.APPLE}
+                    title={LocalizationText.apple_id}
+                />
+                <LoginButton
+                    onPress={showNicknameDeviceSheet}
+                    loginType={LoginType.FACEBOOK}
+                    title={LocalizationText.facebook}
+                />
+                <LoginButton
+                    onPress={showNicknameDeviceSheet}
+                    loginType={LoginType.GOOGLE}
+                    title={LocalizationText.google}
+                />
             </View>
         </View>
     );
@@ -157,11 +170,11 @@ const styles = StyleSheet.create({
     },
     mainWrapper: {
         padding: 15,
-        paddingBottom: 45
+        paddingBottom: 45,
     },
     logoTextWrapper: {
         marginBottom: 64,
-        alignSelf: 'center'
+        alignSelf: 'center',
     },
     logo: {
         marginLeft: 'auto',
@@ -176,7 +189,7 @@ const styles = StyleSheet.create({
         fontFamily: Font.rubik,
         fontSize: 22,
         letterSpacing: 24,
-        transform: ([{translateX: 12}])
+        transform: [{translateX: 12}],
     },
     backgroundImage: {
         width: '100%',

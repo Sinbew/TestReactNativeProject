@@ -58,19 +58,7 @@ const ChooseAvatarSheet = observer((props: SheetProps<ChooseAvatarSheetProps>) =
             showLoader(false);
         }
     };
-    // const createAvatar = async () => {
-    //     try {
-    //         await SheetManager.hide(SheetId.chooseAvatar);
-    //         const updatedUser: User = {...user, avatar};
-    //         showLoader(true);
-    //         await userService.setUser(updatedUser);
-    //         showLoader(false);
-    //     } catch (e) {
-    //         showLoader(false);
-    //         await SheetManager.show(SheetId.chooseAvatar);
-    //         throw new Error('An error occupied');
-    //     }
-    // };
+
     return (
         <ActionSheet
             id={SheetId.chooseAvatar}
@@ -85,13 +73,17 @@ const ChooseAvatarSheet = observer((props: SheetProps<ChooseAvatarSheetProps>) =
                     {avatar ? <Image source={{uri: avatar}} style={{height: '100%', width: '100%'}}/> : <DefaultAvatarIcon/>}
                 </TouchableOpacity>
                 <View style={styles.buttonsContainer}>
-                    <TouchableOpacity activeOpacity={0.8} style={styles.refresh}
-                                      onPress={onRefreshPress}>
+                    <TouchableOpacity
+                        activeOpacity={0.3}
+                        style={styles.refresh}
+                        onPress={onRefreshPress}
+                        disabled={buttonDisabled}>
                         <Text style={styles.refreshText}>{LocalizationText.refresh}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={onPress}
                         activeOpacity={0.8}
+                        disabled={buttonDisabled}
                         style={buttonDisabled ? styles.createButtonDisabled : styles.createButton}>
                         <Text
                             style={styles.createButtonText}>

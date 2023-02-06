@@ -54,19 +54,6 @@ const ChooseCharacterSheet = observer((props: SheetProps<ChooseCharacterSheetPro
             setLoading(false);
         }
     };
-    // const createCharacter = async () => {
-    //     try {
-    //         await SheetManager.hide(SheetId.chooseCharacter);
-    //         const updatedUser: User = {...user, character: selectedCharacter};
-    //         showLoader(true);
-    //         await userService.setUser(updatedUser);
-    //         showLoader(false);
-    //     } catch (e) {
-    //         showLoader(false);
-    //         await SheetManager.show(SheetId.chooseCharacter);
-    //         showError(e as Error);
-    //     }
-    // };
 
     const LoaderView = () => {
         return (
@@ -100,6 +87,7 @@ const ChooseCharacterSheet = observer((props: SheetProps<ChooseCharacterSheetPro
                 }
                 <TouchableOpacity
                     activeOpacity={0.8}
+                    disabled={buttonDisabled}
                     style={buttonDisabled ? styles.createButtonDisabled : styles.createButton}
                     onPress={onPress}>
                     <Text

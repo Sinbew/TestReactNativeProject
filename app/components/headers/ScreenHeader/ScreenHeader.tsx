@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     title: {
         color: Color['#808191'],
         fontSize: 22,
-        fontWeight: '700',
+        fontWeight: '500',
         fontFamily: Font.rubik,
     },
     button: {
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: Color['#808191'],
         fontSize: 14,
-        fontWeight: '700',
+        fontWeight: '400',
         fontFamily: Font.rubik,
     }
 });
