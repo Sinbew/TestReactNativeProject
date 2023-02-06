@@ -10,8 +10,10 @@ export interface AppProcessingProviderProps {
 
 
 const SettingsProvider = observer(({children}: AppProcessingProviderProps) => {
+
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [incomeError, setIncomeError] = useState<Error | null>(null);
+
     const showLoader = (loading: boolean) => {
         setIsLoading(loading);
     };
@@ -54,10 +56,10 @@ const SettingsProvider = observer(({children}: AppProcessingProviderProps) => {
 
     return (
         <SettingsContext.Provider
-            value={{showLoader, showError}}>
+            value={{showLoader: showLoader, showError}}>
+            {children}
             {renderLoaderView()}
             {renderErrorView()}
-            {children}
         </SettingsContext.Provider>
     );
 });

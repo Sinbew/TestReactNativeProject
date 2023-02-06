@@ -18,6 +18,7 @@ import {IUserService} from '../../service/user/user-service-interface';
 import SettingsContext from '../../context/settings-context/settings-context';
 import {Character} from '../../models/character/character';
 import {Route} from '../../constants/route';
+import { Screen } from 'react-native-screens';
 
 const LoginScreen = observer(() => {
     const userState: UserState = useInjection(Type.UserState);
@@ -59,6 +60,7 @@ const LoginScreen = observer(() => {
             const updatedAvatar: User = {...existingUser, avatar: avatar};
             await userService.setUser(updatedAvatar);
             await SheetManager.hide(SheetId.chooseAvatar);
+            navigation.navigate(Route.AUTHORIZED_STACK as never);
         } catch (e) {
             await SheetManager.hide(SheetId.chooseAvatar);
             showError(e as Error);
@@ -82,7 +84,6 @@ const LoginScreen = observer(() => {
                 await showChosenAvatarSheet();
                 return;
             }
-            navigation.navigate(Route.AUTHORIZED_STACK as never);
         } catch (e) {
             throw e;
         }

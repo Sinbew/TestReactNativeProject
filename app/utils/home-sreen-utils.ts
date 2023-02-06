@@ -7,7 +7,10 @@ export interface CharacterViewProps {
     background: ImageRequireSource;
 }
 
-export const getCharacterViewProps = (character: Character): CharacterViewProps | null => {
+export const getCharacterViewProps = (character: Character | undefined): CharacterViewProps | null => {
+    if (!character) {
+        return null;
+    }
     switch (character.name) {
         case CharacterName.PAKT:
             return {
