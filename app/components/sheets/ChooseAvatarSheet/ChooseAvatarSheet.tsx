@@ -61,6 +61,7 @@ const ChooseAvatarSheet = observer((props: SheetProps<ChooseAvatarSheetProps>) =
 
     return (
         <ActionSheet
+            animated={false}
             id={SheetId.chooseAvatar}
             containerStyle={styles.container}
             drawUnderStatusBar>
@@ -87,7 +88,7 @@ const ChooseAvatarSheet = observer((props: SheetProps<ChooseAvatarSheetProps>) =
                         style={buttonDisabled ? styles.createButtonDisabled : styles.createButton}>
                         <Text
                             style={styles.createButtonText}>
-                            {LocalizationText.letsGo}
+                            {payloadAvatar ? LocalizationText.updatePicture : LocalizationText.letsGo}
                         </Text>
                     </TouchableOpacity>
                 </View>

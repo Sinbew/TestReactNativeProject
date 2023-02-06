@@ -46,8 +46,16 @@ const ChooseNicknameDeviceSheet = observer((props: SheetProps<ChooseNicknameDevi
         await SheetManager.hide(SheetId.chooseNicknameDevice);
     };
 
+    const isUserExist = () => {
+        return !!(initialNickname && initialDevice);
+    };
+
     return (
-        <ActionSheet containerStyle={styles.container} id={SheetId.chooseNicknameDevice}>
+        <ActionSheet
+            containerStyle={styles.container}
+            id={SheetId.chooseNicknameDevice}
+            animated={false}
+        >
             <View style={styles.mainContainer}>
                 <View style={styles.headWrapper}>
                     <Text style={styles.welcomeText}>{LocalizationText.welcome}</Text>
@@ -71,7 +79,7 @@ const ChooseNicknameDeviceSheet = observer((props: SheetProps<ChooseNicknameDevi
                     activeOpacity={0.8}
                     style={buttonDisabled ? styles.createButtonDisabled : styles.createButton}
                 >
-                    <Text style={styles.createButtonText}>{LocalizationText.create}</Text>
+                    <Text style={styles.createButtonText}>{isUserExist() ? LocalizationText.update : LocalizationText.create}</Text>
                 </TouchableOpacity>
             </View>
         </ActionSheet>

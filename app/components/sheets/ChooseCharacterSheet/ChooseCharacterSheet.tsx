@@ -34,7 +34,6 @@ const ChooseCharacterSheet = observer((props: SheetProps<ChooseCharacterSheetPro
 
     const {width, height} = useWindowDimensions();
 
-
     useEffect(() => {
         initCharacters();
     }, [characters.length]);
@@ -66,6 +65,7 @@ const ChooseCharacterSheet = observer((props: SheetProps<ChooseCharacterSheetPro
 
     return (
         <ActionSheet
+            animated={false}
             containerStyle={styles.container}
             drawUnderStatusBar
             id={SheetId.chooseCharacter}
@@ -92,7 +92,7 @@ const ChooseCharacterSheet = observer((props: SheetProps<ChooseCharacterSheetPro
                     onPress={onPress}>
                     <Text
                         style={styles.createButtonText}>
-                        {LocalizationText.yeah}
+                        {payloadCharacter?.name ? LocalizationText.updateCharacter : LocalizationText.yeah}
                     </Text>
                 </TouchableOpacity>
             </View>

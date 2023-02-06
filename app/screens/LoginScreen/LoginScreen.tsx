@@ -71,21 +71,15 @@ const LoginScreen = observer(() => {
                 return;
             }
             if (!user.nickName || !user.device) {
-                setTimeout(async () => {
-                    await showNicknameDeviceSheet();
-                }, 500);
+                await showNicknameDeviceSheet();
                 return;
             }
             if (!user.character) {
-                setTimeout(async () => {
-                    await showChooseCharacterSheet();
-                }, 500);
+                await showChooseCharacterSheet();
                 return;
             }
             if (!user.avatar) {
-                setTimeout(async () => {
-                    await showChosenAvatarSheet();
-                }, 500);
+                await showChosenAvatarSheet();
                 return;
             }
             navigation.navigate(Route.AUTHORIZED_STACK as never);

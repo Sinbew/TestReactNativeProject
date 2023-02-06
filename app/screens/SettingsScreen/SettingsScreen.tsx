@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Button, SafeAreaView, ScrollView, StyleSheet} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {Color} from '../../constants/color';
 import {Font} from '../../constants/fonts/font';
 import ScreenHeader from '../../components/headers/ScreenHeader/ScreenHeader';
@@ -7,6 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 import SettingsMenuItemView from './views/SettingsMenuItemView/SettingsMenuItemView';
 import {SheetManager} from 'react-native-actions-sheet';
 import SheetId from '../../constants/sheet-id';
+import sheetId from '../../constants/sheet-id';
 import {observer} from 'mobx-react-lite';
 import {UserState} from '../../state/user/user-state';
 import {useInjection} from 'inversify-react';
@@ -15,9 +16,6 @@ import {User} from '../../models/user/user';
 import {IUserService} from '../../service/user/user-service-interface';
 import {Character} from '../../models/character/character';
 import SettingsContext from '../../context/settings-context/settings-context';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Route} from '../../constants/route';
-import sheetId from '../../constants/sheet-id';
 import {Device} from '../../models/device/device';
 
 const SettingsScreen = observer(() => {
@@ -105,15 +103,6 @@ const SettingsScreen = observer(() => {
         }
     };
 
-    const reset = async () => {
-        try {
-            await AsyncStorage.clear();
-            navigation.navigate(Route.NOT_AUTHORIZED_STACK as never);
-        } catch (e) {
-            console.warn(e);
-        }
-    };
-
     return (
         <SafeAreaView style={styles.container}>
             <ScreenHeader title='Settings' onBackPress={() => navigation.goBack()}/>
@@ -133,7 +122,7 @@ const SettingsScreen = observer(() => {
                     onItemPress={onChangeAvatar}
                     icon='avatar'
                 />
-                <Button title='Reset' onPress={reset}/>
+
             </ScrollView>
         </SafeAreaView>
     );
