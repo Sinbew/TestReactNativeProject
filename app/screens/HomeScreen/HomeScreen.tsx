@@ -60,6 +60,7 @@ const HomeScreen = observer(() => {
             showLoader(true);
             await AsyncStorage.clear();
             navigation.navigate(Route.NOT_AUTHORIZED_STACK as never);
+            userState.setUser(null);
             showLoader(false);
         } catch (e) {
             console.warn(e);
