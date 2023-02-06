@@ -19,6 +19,7 @@ import {Route} from '../../constants/route';
 import {observer} from 'mobx-react-lite';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SettingsContext from '../../context/settings-context/settings-context';
+import {LocalizationText} from '../../localizations/localization-text';
 
 const HomeScreen = observer(() => {
 
@@ -110,7 +111,7 @@ const HomeScreen = observer(() => {
                     <Text style={styles.deviceText}>Your device</Text>
                 </TouchableOpacity>
                 <TouchableOpacity activeOpacity={0.8} onPress={logOut} style={styles.logoutButton}>
-                    <Text style={styles.logoutButtonText}>Logout</Text>
+                    <Text style={styles.logoutButtonText}>{LocalizationText.logout}</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>

@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle} from 'react-native';
 import {Color} from '../../../constants/color';
 import {Font} from '../../../constants/fonts/font';
+import {LocalizationText} from '../../../localizations/localization-text';
 
 
 export interface ScreenHeaderProps {
@@ -20,7 +21,7 @@ const ScreenHeader = (props: ScreenHeaderProps) => {
                 activeOpacity={0.8}
                 onPress={props.onBackPress}
             >
-                <Text style={styles.buttonText}>Back</Text>
+                <Text style={styles.buttonText}>{LocalizationText.goBack}</Text>
             </TouchableOpacity>
         </View>
     );

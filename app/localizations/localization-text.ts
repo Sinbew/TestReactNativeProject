@@ -30,6 +30,7 @@ export const LocalizationText = {
     menuBarSettingsText: 'Configure your app',
 
     settingsScreenText: 'Settings',
-    goBack: 'back'
+    goBack: 'Back',
+    logout: 'Logout'
 };
 
