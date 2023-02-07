@@ -7,5 +7,6 @@ export const Route = {
 
     AUTHORIZED_STACK: 'AuthorizedStack',
     HOME_SCREEN: 'HomeScreen',
-    SETTINGS_SCREEN: 'SettingsScreen'
+    SETTINGS_SCREEN: 'SettingsScreen',
+    NOTIFICATIONS_SCREEN: 'NotificationsScreen'
 };
