@@ -4,7 +4,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 platform :ios, '12.4'
 install! 'cocoapods', :deterministic_uuids => false
 
-target 'InternProject' do
+def shared_pods
   config = use_native_modules!
 
   # Flags change depending on the env values.
@@ -26,18 +26,27 @@ target 'InternProject' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'InternProjectTests' do
-    inherit! :complete
-    # Pods for testing
-  end
+#   target 'InternProjectTests' do
+#     inherit! :complete
+#     # Pods for testing
+#   end
 
-  post_install do |installer|
+end
+
+post_install do |installer|
     react_native_post_install(
-      installer,
+        installer,
       # Set `mac_catalyst_enabled` to `true` in order to apply patches
       # necessary for Mac Catalyst builds
       :mac_catalyst_enabled => false
     )
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
-  end
+end
+
+target 'InternProject Develop' do
+    shared_pods
+end
+
+target 'InternProject' do
+    shared_pods
 end
