@@ -6,7 +6,6 @@ import {Notification} from '../../models/notification/notification';
 export class NotificationsState {
 
     @observable private notifications: Notification[];
-    @observable private isLoading: boolean;
 
     constructor() {
         makeObservable(this);
@@ -18,7 +17,7 @@ export class NotificationsState {
     }
 
     @action
-    public setNotifications(items: []) {
+    public setNotifications(items: Notification[]) {
         this.notifications = items;
     }
 
