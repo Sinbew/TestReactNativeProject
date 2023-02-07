@@ -31,6 +31,7 @@ export const LocalizationText = {
 
     settingsScreenText: 'Settings',
     goBack: 'Back',
-    logout: 'Logout'
+    logout: 'Logout',
+    notifications: 'Notifications'
 };
 
