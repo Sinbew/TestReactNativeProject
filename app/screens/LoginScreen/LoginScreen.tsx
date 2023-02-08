@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react';
-import {Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
+import {Image, ImageBackground, StatusBar, StyleSheet, View} from 'react-native';
 import LoginButton from './LoginButton/LoginButton';
 import {LoginType} from '../../constants/login-type';
 import {LocalizationText} from '../../localizations/localization-text';
@@ -12,13 +12,12 @@ import {UserState} from '../../state/user/user-state';
 import {User} from '../../models/user/user';
 import {useNavigation} from '@react-navigation/native';
 import {Color} from '../../constants/color';
-import {Font} from '../../constants/fonts/font';
 import {Device} from '../../models/device/device';
 import {IUserService} from '../../service/user/user-service-interface';
 import SettingsContext from '../../context/settings-context/settings-context';
 import {Character} from '../../models/character/character';
 import {Route} from '../../constants/route';
-import { Screen } from 'react-native-screens';
+import LaziiIcon from './LoginButton/icons/LaziiIcon';
 
 const LoginScreen = observer(() => {
     const userState: UserState = useInjection(Type.UserState);
@@ -123,6 +122,7 @@ const LoginScreen = observer(() => {
     };
     return (
         <View style={styles.container}>
+            <StatusBar translucent backgroundColor='transparent'/>
             <ImageBackground
                 source={require('../../../assets/images/login_background.png')}
                 resizeMode='cover'
@@ -133,7 +133,7 @@ const LoginScreen = observer(() => {
                 style={styles.logo}
             />
             <View style={styles.logoTextWrapper}>
-                <Text style={styles.logoText}>LAZII</Text>
+                <LaziiIcon/>
             </View>
             <View style={styles.mainWrapper}>
                 <LoginButton
@@ -159,7 +159,6 @@ const LoginScreen = observer(() => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        borderWidth: 2,
         backgroundColor: Color['#191B20'],
         justifyContent: 'flex-end',
     },
@@ -177,14 +176,6 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         width: 200,
         height: 217,
-    },
-    logoText: {
-        color: Color['#EFD548'],
-        fontWeight: '900',
-        fontFamily: Font.rubik,
-        fontSize: 22,
-        letterSpacing: 24,
-        transform: [{translateX: 12}],
     },
     backgroundImage: {
         width: '100%',

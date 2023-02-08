@@ -12,6 +12,7 @@ import DefaultAvatarIcon from '../../icons/DefaultAvatarIcon';
 import {ImagePickerResponse, launchImageLibrary} from 'react-native-image-picker';
 import SettingsContext from '../../../context/settings-context/settings-context';
 import {Color} from '../../../constants/color';
+import {Font} from '../../../constants/fonts/font';
 
 export interface ChooseAvatarSheetProps {
     updateAvatar: (avatar: string) => Promise<void>;
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 24,
-        fontWeight: '500',
+        fontFamily: Font['Rubik-Medium'],
         color: 'white',
         textAlign: 'center',
         marginBottom: 8,
@@ -126,6 +127,7 @@ const styles = StyleSheet.create({
     subTitle: {
         fontSize: 14,
         color: Color['#808191'],
+        fontFamily: Font['Rubik-Regular'],
         maxWidth: 202,
         textAlign: 'center'
     },
@@ -149,7 +151,8 @@ const styles = StyleSheet.create({
     },
     refreshText: {
         textTransform: 'uppercase',
-        color: Color['#EFD548']
+        color: Color['#EFD548'],
+        fontFamily: Font['Rubik-Regular'],
     },
     createButton: {
         backgroundColor: Color['#EFD548'],
@@ -166,7 +169,7 @@ const styles = StyleSheet.create({
     createButtonText: {
         textAlign: 'center',
         color: Color['#181A1C'],
-        fontWeight: '500',
+        fontFamily: Font['Rubik-Medium'],
         textTransform: 'uppercase'
     },
 });

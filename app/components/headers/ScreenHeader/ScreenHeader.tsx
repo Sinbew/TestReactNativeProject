@@ -41,8 +41,7 @@ const styles = StyleSheet.create({
     title: {
         color: Color['#808191'],
         fontSize: 22,
-        fontWeight: '500',
-        fontFamily: Font.rubik,
+        fontFamily: Font['Rubik-Medium'],
     },
     button: {
         left: 0,
@@ -55,8 +54,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: Color['#808191'],
         fontSize: 14,
-        fontWeight: '400',
-        fontFamily: Font.rubik,
+        fontFamily: Font['Rubik-Regular'],
     }
 });
 export default ScreenHeader;

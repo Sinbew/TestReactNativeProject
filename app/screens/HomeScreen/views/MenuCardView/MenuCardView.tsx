@@ -51,12 +51,15 @@ const styles = StyleSheet.create({
     }, title: {
         marginTop: 20,
         fontSize: 15,
-        fontFamily: Font.rubik,
-        fontWeight: '700',
+        fontFamily: Font['Rubik-Bold'],
         color: Color['#ffffff'],
         textTransform: 'uppercase',
         letterSpacing: 0.2
     }, subtitle: {
-        marginTop: 5, color: Color['#808191'], fontFamily: Font.rubik, fontWeight: '400', fontSize: 9, textTransform: 'uppercase'
+        marginTop: 5,
+        color: Color['#808191'],
+        fontFamily: Font['Rubik-Regular'],
+        fontSize: 9,
+        textTransform: 'uppercase'
     }
 });
