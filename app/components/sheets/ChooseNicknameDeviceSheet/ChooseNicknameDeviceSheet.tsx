@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {useInjection} from 'inversify-react';
 import {Type} from '../../../ioc/type';
 import ActionSheet, {SheetManager, SheetProps} from 'react-native-actions-sheet';
@@ -52,36 +52,44 @@ const ChooseNicknameDeviceSheet = observer((props: SheetProps<ChooseNicknameDevi
 
     return (
         <ActionSheet
+            keyboardHandlerEnabled={false}
             containerStyle={styles.container}
             id={SheetId.chooseNicknameDevice}
             animated={false}
         >
-            <View style={styles.mainContainer}>
-                <View style={styles.headWrapper}>
-                    <Text style={styles.welcomeText}>{LocalizationText.welcome}</Text>
-                    <TouchableOpacity onPress={onClosePress} activeOpacity={0.8} style={styles.closeBtn}>
-                        <Text style={styles.closeIcon}>x</Text>
+            <TouchableOpacity
+                activeOpacity={1}
+                style={{flex: 1, justifyContent: 'flex-end'}}
+                onPress={() => Keyboard.dismiss()}
+            >
+                <View style={styles.mainContainer}>
+                    <View style={styles.headWrapper}>
+                        <Text style={styles.welcomeText}>{LocalizationText.welcome}</Text>
+                        <TouchableOpacity onPress={onClosePress} activeOpacity={0.8} style={styles.closeBtn}>
+                            <Text style={styles.closeIcon}>x</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <TextInput
+                        value={nickname || ''}
+                        style={styles.inputForName}
+                        placeholder={LocalizationText.nickName}
+                        placeholderTextColor={'#808191'}
+                        onChangeText={setNickname}
+                    />
+                    <Text style={styles.yourDeviceText}>{LocalizationText.yourDevice}</Text>
+                    {devices.length === 0 ? null :
+                        <DevicesCardView selectedDevice={selectedDevice} onSelectDevice={setSelectedDevice} devices={devices}/>}
+                    <TouchableOpacity
+                        disabled={buttonDisabled}
+                        onPress={() => updateNicknameAndDevice(nickname!, selectedDevice!)}
+                        activeOpacity={0.8}
+                        style={buttonDisabled ? styles.createButtonDisabled : styles.createButton}
+                    >
+                        <Text style={styles.createButtonText}>{isUserExist() ? LocalizationText.update : LocalizationText.create}</Text>
                     </TouchableOpacity>
                 </View>
-                <TextInput
-                    value={nickname || ''}
-                    style={styles.inputForName}
-                    placeholder={LocalizationText.nickName}
-                    placeholderTextColor={'#808191'}
-                    onChangeText={setNickname}
-                />
-                <Text style={styles.yourDeviceText}>{LocalizationText.yourDevice}</Text>
-                {devices.length === 0 ? null :
-                    <DevicesCardView selectedDevice={selectedDevice} onSelectDevice={setSelectedDevice} devices={devices}/>}
-                <TouchableOpacity
-                    disabled={buttonDisabled}
-                    onPress={() => updateNicknameAndDevice(nickname!, selectedDevice!)}
-                    activeOpacity={0.8}
-                    style={buttonDisabled ? styles.createButtonDisabled : styles.createButton}
-                >
-                    <Text style={styles.createButtonText}>{isUserExist() ? LocalizationText.update : LocalizationText.create}</Text>
-                </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
+
         </ActionSheet>
     );
 });

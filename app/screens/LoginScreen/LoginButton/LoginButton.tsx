@@ -50,8 +50,7 @@ const styles = StyleSheet.create({
     loginButtonText: {
         color: Color['#ffffff'],
         textAlign: 'center',
-        fontFamily: Font.rubik,
-        fontWeight: '500',
+        fontFamily: Font['Rubik-Medium'],
         fontSize: 13,
     },
 

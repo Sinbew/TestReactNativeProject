@@ -11,6 +11,7 @@ import {ICharacterService} from '../../../service/character/character-service-in
 import CharacterCardView from './views/CharacterCardView';
 import {LocalizationText} from '../../../localizations/localization-text';
 import {Color} from '../../../constants/color';
+import {Font} from '../../../constants/fonts/font';
 
 export interface ChooseCharacterSheetProps {
     updateCharacter: (character: Character) => Promise<void>;
@@ -61,7 +62,6 @@ const ChooseCharacterSheet = observer((props: SheetProps<ChooseCharacterSheetPro
             </View>
         );
     };
-
 
     return (
         <ActionSheet
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 24,
-        fontWeight: '500',
+        fontFamily: Font['Rubik-Medium'],
         color: 'white',
         textAlign: 'center',
         marginBottom: 8,
@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
     subTitle: {
         fontSize: 14,
         color: Color['#808191'],
+        fontFamily: Font['Rubik-Regular'],
         maxWidth: 202,
         textAlign: 'center'
     },
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
     createButtonText: {
         textAlign: 'center',
         color: '#181A1C',
-        fontWeight: '500',
+        fontFamily: Font['Rubik-Medium'],
         textTransform: 'uppercase'
     },
     loader: {

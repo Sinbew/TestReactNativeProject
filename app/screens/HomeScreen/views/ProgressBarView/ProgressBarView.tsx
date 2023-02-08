@@ -27,8 +27,7 @@ const styles = StyleSheet.create({
     text: {
         textTransform: 'uppercase',
         color: Color['#808191'],
-        fontFamily: Font.rubik,
-        fontWeight: '500',
+        fontFamily: Font['Rubik-Medium'],
         fontSize: 8,
         marginTop: 4
     }

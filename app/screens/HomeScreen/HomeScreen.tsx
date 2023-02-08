@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react';
-import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View} from 'react-native';
+import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View, Platform, StatusBar} from 'react-native';
 import {Color} from '../../constants/color';
 import {User} from '../../models/user/user';
 import {useInjection} from 'inversify-react';
@@ -35,10 +35,11 @@ const HomeScreen = observer(() => {
     const navigation = useNavigation();
     const {showLoader} = useContext(SettingsContext);
 
+
     useEffect(() => {
     }, [user]);
     const onAboutPress = () => {
-        console.warn('About');
+        console.warn('insets', insets);
     };
     const onSettingsPress = () => {
         navigation.navigate(Route.SETTINGS_SCREEN as never);
@@ -81,16 +82,18 @@ const HomeScreen = observer(() => {
     };
 
     return (<View style={styles.container}>
+        <StatusBar translucent backgroundColor='transparent'/>
         <Image
             resizeMode='stretch'
             blurRadius={5}
             source={characterViewProps ? characterViewProps.background : 0}
         />
         <ScrollView style={styles.scroll}>
-            <View style={[styles.topContainer, {height: height * 0.39}]}>
+            <View style={[styles.topContainer, {height: Platform.OS === 'android' ? height * 0.43 : height * 0.39}]}>
                 <View style={[styles.statusBarContainer, {marginTop: insets.top}]}>
                     <DocumentIcon/>
                     <TouchableOpacity onPress={onNotificationsPress} style={styles.notificationIcon}>
+                        <View style={styles.notificationIndicator}></View>
                         <NotificationIcon/>
                     </TouchableOpacity>
                     <Image source={{uri: avatar}} style={styles.avatar}/>
@@ -143,11 +146,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingLeft: 22,
-        paddingRight: 35
+        paddingRight: 35,
     },
     notificationIcon: {
         marginLeft: 'auto',
         marginRight: 22
+    },
+    notificationIndicator: {
+        position: 'absolute',
+        right: 2,
+        top: -6,
+        width: 8,
+        height: 8,
+        backgroundColor: Color['#EFD548'],
+        borderRadius: 10
     },
     avatar: {
         borderRadius: 12,
@@ -155,8 +167,9 @@ const styles = StyleSheet.create({
         height: 40
     },
     topContainer: {
+        paddingTop: Platform.OS === 'android' ? 5 : 0,
         width: '100%',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     mainWrapper: {
         width: '100%',
@@ -174,13 +187,14 @@ const styles = StyleSheet.create({
         paddingLeft: 40
     },
     characterLevel: {
-        fontFamily: Font.rubik,
-        fontWeight: '700', fontSize: 16,
+        fontFamily: Font['Rubik-Bold'],
+        fontSize: 16,
         color: Color['#ffffff']
     },
     characterNickname: {
-        fontFamily: Font.rubik, fontWeight: '500',
-        fontSize: 24, color: Color['#ffffff']
+        fontFamily: Font['Rubik-Medium'],
+        fontSize: 24,
+        color: Color['#ffffff']
     },
     characterWrapper: {
         width: '52.5%',
@@ -202,8 +216,7 @@ const styles = StyleSheet.create({
     },
     deviceText: {
         color: Color['#ffffff'],
-        fontFamily: Font.rubik,
-        fontWeight: '700',
+        fontFamily: Font['Rubik-Bold'],
         fontSize: 16,
         textTransform: 'uppercase',
         marginRight: 10
@@ -217,7 +230,7 @@ const styles = StyleSheet.create({
     logoutButtonText: {
         textAlign: 'center',
         color: Color['#FF4A1D'],
-        fontWeight: '700',
+        fontFamily: Font['Rubik-Medium'],
         textTransform: 'uppercase'
     }
 });

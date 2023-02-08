@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
+import {Platform, SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {Color} from '../../constants/color';
 import {Font} from '../../constants/fonts/font';
 import ScreenHeader from '../../components/headers/ScreenHeader/ScreenHeader';
@@ -122,7 +122,6 @@ const SettingsScreen = observer(() => {
                     onItemPress={onChangeAvatar}
                     icon='avatar'
                 />
-
             </ScrollView>
         </SafeAreaView>
     );
@@ -134,23 +133,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Color['#191B20'],
-    },
-    head: {
-        flexDirection: 'row',
-        alignItems: 'baseline',
-        paddingHorizontal: 16,
+        paddingTop: Platform.OS === 'android' ? 30 : 0
     },
     goBack: {
         color: Color['#808191'],
         fontSize: 14,
-        fontWeight: '700',
-        fontFamily: Font.rubik,
+        fontFamily: Font['Rubik-Bold'],
     },
     settingsTitle: {
         color: Color['#808191'],
         fontSize: 22,
-        fontWeight: '700',
-        fontFamily: Font.rubik,
+        fontFamily: Font['Rubik-Bold'],
         // marginLeft: 100
     },
     separator: {
