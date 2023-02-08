@@ -57,9 +57,8 @@ const styles = StyleSheet.create({
     },
     text: {
         color: Color['#ffffff'],
-        fontFamily: Font.rubik,
+        fontFamily: Font['Rubik-Regular'],
         fontSize: 14,
-        fontWeight: '400',
         marginLeft: 15
     }
 });

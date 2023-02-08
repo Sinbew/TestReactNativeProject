@@ -44,8 +44,7 @@ const styles = StyleSheet.create({
     },
     text: {
         marginRight: 4,
-        fontFamily: Font.rubik,
-        fontWeight: '500',
+        fontFamily: Font['Rubik-Medium'],
     },
     textColorBlue: {
         color: Color['#51A4ED'],

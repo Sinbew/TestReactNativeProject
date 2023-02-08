@@ -3,6 +3,7 @@ import {Character} from '../../../../models/character/character';
 import {ImageBackground, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle} from 'react-native';
 import {CharacterName} from '../../../../models/character/character-name';
 import {Color} from '../../../../constants/color';
+import {Font} from '../../../../constants/fonts/font';
 
 export interface CharacterCardViewProps {
     characters: Character[];
@@ -87,14 +88,14 @@ const styles = StyleSheet.create({
     },
     defaultCharacterName: {
         color: Color['#ffffff'],
-        fontWeight: '700',
+        fontFamily: Font['Rubik-Bold'],
         fontSize: 16,
         textAlign: 'center',
         marginBottom: 4
     },
     characterAbility: {
         color: Color['#ffffff'],
-        fontWeight: '500',
+        fontFamily: Font['Rubik-Medium'],
         fontSize: 12,
         textAlign: 'center'
     },

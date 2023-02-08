@@ -12,8 +12,8 @@ const AppleIcon = (props: SvgProps) => (
             maskUnits='userSpaceOnUse'
             x={4}
             y={6}
-            width={16}
-            height={16}>
+            width={24}
+            height={24}>
             <Path d='M4 6.725h15.965v14.88H4V6.726Z' fill='#fff'/>
         </Mask>
         <G mask='url(#a)'>
@@ -29,8 +29,8 @@ const AppleIcon = (props: SvgProps) => (
             maskUnits='userSpaceOnUse'
             x={11}
             y={2}
-            width={5}
-            height={5}>
+            width={24}
+            height={24}>
             <Path d='M11.933 2h3.973v4.526h-3.973V2Z' fill='#fff'/>
         </Mask>
         <G mask='url(#b)'>
