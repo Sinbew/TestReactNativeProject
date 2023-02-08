@@ -93,6 +93,7 @@ const HomeScreen = observer(() => {
                 <View style={[styles.statusBarContainer, {marginTop: insets.top}]}>
                     <DocumentIcon/>
                     <TouchableOpacity onPress={onNotificationsPress} style={styles.notificationIcon}>
+                        <View style={styles.notificationIndicator}></View>
                         <NotificationIcon/>
                     </TouchableOpacity>
                     <Image source={{uri: avatar}} style={styles.avatar}/>
@@ -150,6 +151,15 @@ const styles = StyleSheet.create({
     notificationIcon: {
         marginLeft: 'auto',
         marginRight: 22
+    },
+    notificationIndicator: {
+        position: 'absolute',
+        right: 2,
+        top: -6,
+        width: 8,
+        height: 8,
+        backgroundColor: Color['#EFD548'],
+        borderRadius: 10
     },
     avatar: {
         borderRadius: 12,
