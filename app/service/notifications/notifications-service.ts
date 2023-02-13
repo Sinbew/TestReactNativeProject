@@ -30,4 +30,12 @@ export class NotificationsService implements INotificationsService {
             console.error(e);
         }
     }
+
+    public addNotification(item: Notification) {
+        try {
+            this.notificationsState.addNotification(item);
+        } catch (e) {
+            console.error(e);
+        }
+    }
 }

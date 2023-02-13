@@ -4,4 +4,6 @@ export interface INotificationsService {
     initNotifications(): void;
 
     setNotifications(items: Notification[]): void;
+
+    addNotification(item: Notification): void;
 }

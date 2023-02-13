@@ -8,5 +8,6 @@ export const Route = {
     AUTHORIZED_STACK: 'AuthorizedStack',
     HOME_SCREEN: 'HomeScreen',
     SETTINGS_SCREEN: 'SettingsScreen',
-    NOTIFICATIONS_SCREEN: 'NotificationsScreen'
+    NOTIFICATIONS_SCREEN: 'NotificationsScreen',
+    SINGLE_NOTIFICATION_SCREEN: 'SingleNotificationScreen'
 };

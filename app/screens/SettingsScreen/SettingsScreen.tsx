@@ -29,10 +29,7 @@ const SettingsScreen = observer(() => {
     const {showError} = useContext(SettingsContext);
     const navigation = useNavigation();
 
-    const updateNicknameAndDevice = async (
-        incomeNickname: string,
-        incomeDevice: Device
-    ) => {
+    const updateNicknameAndDevice = async (incomeNickname: string, incomeDevice: Device) => {
         try {
             const updatedUser: User = {
                 ...user,
@@ -107,21 +104,9 @@ const SettingsScreen = observer(() => {
         <SafeAreaView style={styles.container}>
             <ScreenHeader title='Settings' onBackPress={() => navigation.goBack()}/>
             <ScrollView style={styles.mainWrapper}>
-                <SettingsMenuItemView
-                    title='Change Nickname and Device'
-                    onItemPress={onChangeNicknameAndDevice}
-                    icon='nickname/device'
-                />
-                <SettingsMenuItemView
-                    title='Change Character'
-                    onItemPress={onChangeCharacter}
-                    icon='character'
-                />
-                <SettingsMenuItemView
-                    title='Change Avatar'
-                    onItemPress={onChangeAvatar}
-                    icon='avatar'
-                />
+                <SettingsMenuItemView title='Change Nickname and Device' onItemPress={onChangeNicknameAndDevice} icon='nickname/device'/>
+                <SettingsMenuItemView title='Change Character' onItemPress={onChangeCharacter} icon='character'/>
+                <SettingsMenuItemView title='Change Avatar' onItemPress={onChangeAvatar} icon='avatar'/>
             </ScrollView>
         </SafeAreaView>
     );
@@ -133,7 +118,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Color['#191B20'],
-        paddingTop: Platform.OS === 'android' ? 30 : 0
+        paddingTop: Platform.OS === 'android' ? 30 : 0,
     },
     goBack: {
         color: Color['#808191'],

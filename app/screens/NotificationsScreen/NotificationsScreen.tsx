@@ -2,11 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {
     ActivityIndicator,
     FlatList,
-    Image, Platform,
+    Image,
+    Platform,
     SafeAreaView,
     StyleSheet,
     Text,
-    TouchableOpacity, useWindowDimensions,
+    TouchableOpacity,
+    useWindowDimensions,
     View
 } from 'react-native';
 import {useInjection} from 'inversify-react';
@@ -20,8 +22,10 @@ import {Notification} from '../../models/notification/notification';
 import {LocalizationText} from '../../localizations/localization-text';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {INotificationsService} from '../../service/notifications/notifications-service-interface';
+import {observer} from 'mobx-react-lite';
+import {Route} from '../../constants/route';
 
-const NotificationsScreen = () => {
+const NotificationsScreen = observer(() => {
 
     const notificationService: INotificationsService = useInjection(Type.NotificationsService);
     const notificationsState: NotificationsState = useInjection(Type.NotificationsState);
@@ -33,7 +37,7 @@ const NotificationsScreen = () => {
 
     useEffect(() => {
         initNotifications();
-    }, []);
+    }, [notifications.length]);
 
     const initNotifications = async () => {
         try {
@@ -45,9 +49,13 @@ const NotificationsScreen = () => {
         }
     };
 
+
+    const openNotification = (notification: Notification) => {
+        navigation.navigate(Route.SINGLE_NOTIFICATION_SCREEN as never, {notification} as never);
+    };
     const renderItem = ({item}: { item: Notification }) => {
         return (
-            <TouchableOpacity style={styles.notificationWrapper} activeOpacity={0.8}>
+            <TouchableOpacity style={styles.notificationWrapper} activeOpacity={0.8} onPress={() => openNotification(item)}>
                 <Image source={{uri: item.thumbnail}} style={styles.image} resizeMode='cover'/>
                 <View style={styles.textWrapper}>
                     <Text style={styles.text}>{item.title}</Text>
@@ -89,7 +97,7 @@ const NotificationsScreen = () => {
                     renderItem={renderItem}
                     contentContainerStyle={styles.list}
                     scrollEnabled={!loading}
-                    keyExtractor={(item) => item.id.toString()}
+                    keyExtractor={(item) => item.id}
                     ItemSeparatorComponent={Separator}
                     ListEmptyComponent={EmptyComponent}
                 />
@@ -97,7 +105,7 @@ const NotificationsScreen = () => {
 
         </View>
     );
-};
+});
 
 export default NotificationsScreen;
 

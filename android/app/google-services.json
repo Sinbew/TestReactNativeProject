@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "364134948272",
+    "project_id": "lazii-develop-c15e9",
+    "storage_bucket": "lazii-develop-c15e9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:364134948272:android:ab66dd468b64b1d6a10a75",
+        "android_client_info": {
+          "package_name": "com.intern.lazii.develop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "364134948272-pr2ekcfop8r1f0kvosk83sbdkflshr4b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDZAttHWjtlhXxCCCGGpDttzyueZYTY08"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "364134948272-pr2ekcfop8r1f0kvosk83sbdkflshr4b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "364134948272-vsh210uccd2ek27a8q54i42hkhg6930c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.intern.lazii.develop"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

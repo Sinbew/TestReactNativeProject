@@ -21,4 +21,9 @@ export class NotificationsState {
         this.notifications = items;
     }
 
+    @action
+    public addNotification(item: Notification) {
+        this.notifications = [item, ...this.notifications];
+    }
+
 }
