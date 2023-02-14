@@ -13,7 +13,7 @@ export class NavigationService {
         return this.navigator;
     }
 
-    public navigate(key: string, params: any) {
+    public navigate(key: string, params?: any) {
         if (this.navigator) {
             this.navigator.navigate(key, params);
         }

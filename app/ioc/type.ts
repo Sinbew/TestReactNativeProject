@@ -8,6 +8,7 @@ export const Type = {
     PushNotificationHandlerService: Symbol.for('PushNotificationHandlerService'),
     InitializationService: Symbol.for('InitializationService'),
     NavigationService: Symbol.for('NavigationService'),
+    DynamicLinksService: Symbol.for('DynamicLinksService'),
 
     UserState: Symbol.for('UserState'),
     AuthState: Symbol.for('AuthState'),

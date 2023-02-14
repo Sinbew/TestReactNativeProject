@@ -24,6 +24,8 @@ export class PushNotificationsService implements IPushNotificationService {
 
     public async getPushToken(): Promise<string | null> {
         try {
+            const apnsToken = await messaging().getAPNSToken();
+            console.log(apnsToken);
             const token: string = await messaging().getToken();
             console.log(token);
             if (!token) {

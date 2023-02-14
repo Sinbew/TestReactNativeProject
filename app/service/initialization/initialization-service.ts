@@ -5,6 +5,8 @@ import {PushNotificationHandlerService} from '../push-notifications/push-notific
 import {IUserService} from '../user/user-service-interface';
 import {User} from '../../models/user/user';
 import {Route} from '../../constants/route';
+import {DynamicLinksService} from '../dynamic-links/dynamic-links-service';
+
 
 @injectable()
 export class InitializationService {
@@ -13,9 +15,11 @@ export class InitializationService {
     @inject(Type.PushNotificationsService) private pushNotificationService: IPushNotificationService;
     @inject(Type.UserService) private userService: IUserService;
     @inject(Type.PushNotificationHandlerService) private pushNotificationHandlerService: PushNotificationHandlerService;
+    @inject(Type.DynamicLinksService) private dynamicLinksService: DynamicLinksService;
 
     public addListeners(): void {
         this.addPushNotificationListeners();
+        this.addDynamicLinksListeners();
     }
 
     public async autologin(): Promise<string> {
@@ -37,16 +41,20 @@ export class InitializationService {
         }
     }
 
-    private addPushNotificationListeners(): void {
+    private async addPushNotificationListeners(): Promise<void> {
         this.pushNotificationService.onNotificationOpenedApp(
             this.pushNotificationHandlerService.handleOnNotificationOpened.bind(this.pushNotificationHandlerService)
         );
         this.pushNotificationService.onMessage(
             this.pushNotificationHandlerService.handleOnMessage.bind(this.pushNotificationHandlerService)
         );
-        this.pushNotificationHandlerService.getInitialNotification();
-        this.pushNotificationService.requestPushPermissions();
-        this.pushNotificationService.getPushToken();
+        await this.pushNotificationHandlerService.getInitialNotification();
+        await this.pushNotificationService.getPushToken();
+        await this.pushNotificationService.requestPushPermissions();
+    }
+
+    private addDynamicLinksListeners(): void {
+        this.dynamicLinksService.getInitialLinkInBackground();
     }
 
     // const requestPermissions = async () => {

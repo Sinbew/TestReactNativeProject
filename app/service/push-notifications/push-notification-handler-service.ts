@@ -24,14 +24,14 @@ export class PushNotificationHandlerService {
     }
 
 
-    public getInitialNotification(): void {
-        this.pushNotificationService.getInitialNotificationOnStart().then(
-            remoteMessage => {
-                const notification = remoteMessage.data;
-                this.navigationService.navigate(Route.SINGLE_NOTIFICATION_SCREEN, {
-                    notification,
-                });
-            }
-        );
+    public async getInitialNotification(): Promise<void> {
+        const remoteMessage = await this.pushNotificationService.getInitialNotificationOnStart();
+        if (!remoteMessage) {
+            return;
+        }
+        const notification = remoteMessage.data;
+        this.navigationService.navigate(Route.SINGLE_NOTIFICATION_SCREEN, {
+            notification,
+        });
     }
 }

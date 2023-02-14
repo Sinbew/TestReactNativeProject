@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, SafeAreaView, Text, View} from 'react-native';
+import {Image, Platform, SafeAreaView, Text, View} from 'react-native';
 import {ParamListBase, RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {Notification} from '../../models/notification/notification';
 import ScreenHeader from '../../components/headers/ScreenHeader/ScreenHeader';
@@ -15,7 +15,7 @@ const SingleNotificationScreen = () => {
     const navigation = useNavigation();
 
     return (
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={{flex: 1, paddingTop: Platform.OS === 'android' ? 30 : 0}}>
             <ScreenHeader
                 title={notification.title}
                 onBackPress={() => navigation.goBack()}

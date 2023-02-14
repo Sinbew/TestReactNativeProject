@@ -11,4 +11,5 @@ export interface IPushNotificationService {
 
     getInitialNotificationOnStart(): Promise<any>;
 
+
 }

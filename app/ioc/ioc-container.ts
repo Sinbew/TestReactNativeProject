@@ -20,6 +20,7 @@ import {PushNotificationsService} from '../service/push-notifications/push-notif
 import {PushNotificationHandlerService} from '../service/push-notifications/push-notification-handler-service';
 import {InitializationService} from '../service/initialization/initialization-service';
 import {NavigationService} from '../service/navigation/navigation-service';
+import {DynamicLinksService} from '../service/dynamic-links/dynamic-links-service';
 
 const iocContainer = new Container();
 iocContainer.bind<IAuthService>(Type.AuthService).to(AuthService);
@@ -31,6 +32,7 @@ iocContainer.bind<IPushNotificationService>(Type.PushNotificationsService).to(Pu
 iocContainer.bind<PushNotificationHandlerService>(Type.PushNotificationHandlerService).to(PushNotificationHandlerService);
 iocContainer.bind<InitializationService>(Type.InitializationService).to(InitializationService);
 iocContainer.bind<NavigationService>(Type.NavigationService).to(NavigationService).inSingletonScope();
+iocContainer.bind<DynamicLinksService>(Type.DynamicLinksService).to(DynamicLinksService).inSingletonScope();
 
 iocContainer.bind<UserState>(Type.UserState).to(UserState).inSingletonScope();
 iocContainer.bind<AuthState>(Type.AuthState).to(AuthState).inSingletonScope();
