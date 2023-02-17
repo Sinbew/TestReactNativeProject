@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Platform, SafeAreaView, ScrollView, StyleSheet} from 'react-native';
+import {Platform, SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Color} from '../../constants/color';
 import {Font} from '../../constants/fonts/font';
 import ScreenHeader from '../../components/headers/ScreenHeader/ScreenHeader';
@@ -17,6 +17,12 @@ import {IUserService} from '../../service/user/user-service-interface';
 import {Character} from '../../models/character/character';
 import SettingsContext from '../../context/settings-context/settings-context';
 import {Device} from '../../models/device/device';
+import Switcher from '../../components/switcher/Switcher';
+import {ListenerType} from '../../constants/listener/listener-type';
+import {Listener} from '../../models/listener/listener';
+import {InitializationService} from '../../service/initialization/initialization-service';
+import {ListenerState} from '../../state/listener/listener-state';
+
 
 const SettingsScreen = observer(() => {
     const userService: IUserService = useInjection(Type.UserService);
@@ -28,6 +34,10 @@ const SettingsScreen = observer(() => {
     const device: Device = user.device;
     const {showError} = useContext(SettingsContext);
     const navigation = useNavigation();
+
+    const initializationService: InitializationService = useInjection(Type.InitializationService);
+    const listenerState: ListenerState = useInjection(Type.ListenerState);
+    const listeners: Listener[] | null = listenerState.getListeners();
 
     const updateNicknameAndDevice = async (incomeNickname: string, incomeDevice: Device) => {
         try {
@@ -100,13 +110,45 @@ const SettingsScreen = observer(() => {
         }
     };
 
+    const initSubscriptionName = (listenerType: ListenerType) => {
+        switch (listenerType) {
+            case ListenerType.ON_NOTIFICATION_OPENED_APP:
+                return 'Open push notification from background';
+            case ListenerType.ON_MESSAGE:
+                return 'Receive push notification inside application';
+        }
+    };
+    const onSwitchChangeValue = async (listenerType: ListenerType, value: boolean) => {
+        if (value) {
+            initializationService.subscribe(listenerType);
+        } else {
+            initializationService.unsubscribe(listenerType);
+        }
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <ScreenHeader title='Settings' onBackPress={() => navigation.goBack()}/>
             <ScrollView style={styles.mainWrapper}>
+                <Text style={styles.updateInfo}>Update information</Text>
                 <SettingsMenuItemView title='Change Nickname and Device' onItemPress={onChangeNicknameAndDevice} icon='nickname/device'/>
                 <SettingsMenuItemView title='Change Character' onItemPress={onChangeCharacter} icon='character'/>
                 <SettingsMenuItemView title='Change Avatar' onItemPress={onChangeAvatar} icon='avatar'/>
+                <Text style={[styles.logoutButtonText, styles.subscriptionText]}>Push notifications</Text>
+                <View style={styles.notificationsSettingsWrapper}>
+                    {listeners.map((listener) => {
+                        return (
+                            <View key={listener.type}
+                                  style={styles.switchesWrapper}>
+                                <Text style={styles.switchText}>{initSubscriptionName(listener.type)}</Text>
+                                <Switcher unsubscribe={listener.unsubscribe}
+                                          listenerType={listener.type}
+                                          onSwitchChangeValue={onSwitchChangeValue}
+                                />
+                            </View>
+                        );
+                    })}
+                </View>
             </ScrollView>
         </SafeAreaView>
     );
@@ -131,15 +173,44 @@ const styles = StyleSheet.create({
         fontFamily: Font['Rubik-Bold'],
         // marginLeft: 100
     },
-    separator: {
-        marginTop: 10,
-        alignSelf: 'center',
-        width: '100%',
-        height: 1,
-        backgroundColor: Color['#242731'],
+    updateInfo: {
+        fontSize: 14,
+        fontFamily: Font['Rubik-Medium'],
+        color: Color['#808191'],
+        textAlign: 'center',
+        textTransform: 'uppercase'
     },
     mainWrapper: {
         paddingHorizontal: 16,
         paddingTop: 24,
     },
+    logoutButtonText: {
+        textAlign: 'center',
+        color: Color['#FF4A1D'],
+        fontFamily: Font['Rubik-Medium'],
+        textTransform: 'uppercase'
+    },
+    subscriptionText: {
+        marginVertical: 10,
+        color: Color['#808191']
+    },
+    notificationsSettingsWrapper: {
+        width: '100%',
+    },
+    switchesWrapper: {
+        backgroundColor: Color['#242731'],
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 16,
+        padding: 16,
+        paddingHorizontal: 24,
+        borderRadius: 16,
+    },
+    switchText: {
+        fontFamily: Font['Rubik-Regular'],
+        color: Color['#ffffff'],
+        fontSize: 12,
+    }
+
 });

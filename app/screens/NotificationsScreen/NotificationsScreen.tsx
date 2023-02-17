@@ -102,7 +102,6 @@ const NotificationsScreen = observer(() => {
                     ListEmptyComponent={EmptyComponent}
                 />
             </View>
-
         </View>
     );
 });
@@ -171,5 +170,5 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontFamily: Font['Rubik-Medium'],
         fontSize: 12
-    }
+    },
 });

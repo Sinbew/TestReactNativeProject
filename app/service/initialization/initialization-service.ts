@@ -3,9 +3,12 @@ import {Type} from '../../ioc/type';
 import {IPushNotificationService} from '../push-notifications/push-notification-service-interface';
 import {PushNotificationHandlerService} from '../push-notifications/push-notification-handler-service';
 import {IUserService} from '../user/user-service-interface';
-import {User} from '../../models/user/user';
 import {Route} from '../../constants/route';
 import {DynamicLinksService} from '../dynamic-links/dynamic-links-service';
+import {IAuthService} from '../auth/auth-service-interface';
+import {ListenerState} from '../../state/listener/listener-state';
+import {ListenerType} from '../../constants/listener/listener-type';
+import {Listener} from '../../models/listener/listener';
 
 
 @injectable()
@@ -16,67 +19,77 @@ export class InitializationService {
     @inject(Type.UserService) private userService: IUserService;
     @inject(Type.PushNotificationHandlerService) private pushNotificationHandlerService: PushNotificationHandlerService;
     @inject(Type.DynamicLinksService) private dynamicLinksService: DynamicLinksService;
+    @inject(Type.ListenerState) private listenerState: ListenerState;
 
-    public addListeners(): void {
-        this.addPushNotificationListeners();
+    @inject(Type.AuthService) private authService: IAuthService;
+
+    public async addListeners(): Promise<void> {
+        await this.addPushNotificationListeners();
         this.addDynamicLinksListeners();
     }
 
     public async autologin(): Promise<string> {
         try {
-            const existingUser: User | null = await this.userService.getUser();
-            if (!existingUser) {
-                return Route.NOT_AUTHORIZED_STACK;
-            }
-            await this.userService.setUser(existingUser);
-            const isUserCompleted: boolean = this.userService.isUserCompleted(existingUser);
-            if (isUserCompleted) {
+            const autologinSuccessful = await this.authService.autoLogin();
+            if (autologinSuccessful) {
+                await this.addListeners();
                 return Route.AUTHORIZED_STACK;
-            } else {
-                return Route.NOT_AUTHORIZED_STACK;
             }
+            return Route.NOT_AUTHORIZED_STACK;
         } catch (e) {
             console.warn('Auto login failed', e);
             return Route.NOT_AUTHORIZED_STACK;
         }
     }
 
-    private async addPushNotificationListeners(): Promise<void> {
-        this.pushNotificationService.onNotificationOpenedApp(
-            this.pushNotificationHandlerService.handleOnNotificationOpened.bind(this.pushNotificationHandlerService)
-        );
-        this.pushNotificationService.onMessage(
-            this.pushNotificationHandlerService.handleOnMessage.bind(this.pushNotificationHandlerService)
-        );
-        await this.pushNotificationHandlerService.getInitialNotification();
-        await this.pushNotificationService.getPushToken();
-        await this.pushNotificationService.requestPushPermissions();
+    public async handleOpenByNotification() {
+        const message = await this.pushNotificationService.getInitialPushNotification();
+        if (message) {
+            await this.pushNotificationHandlerService.onInitialNotificationStartHandler(message);
+        }
+    }
+
+
+    public async addPushNotificationListeners(): Promise<void> {
+        const permissionsGranted = await this.pushNotificationService.requestPushPermissions();
+        if (permissionsGranted) {
+            const onNotificationOpenUnsubscribe = this.pushNotificationService.onNotificationOpenedApp(
+                this.pushNotificationHandlerService.handleOnNotificationOpened.bind(this.pushNotificationHandlerService)
+            );
+            const onMessengerUnsubscribe = this.pushNotificationService.onMessage(
+                this.pushNotificationHandlerService.handleOnMessage.bind(this.pushNotificationHandlerService)
+            );
+            await this.pushNotificationService.getPushToken();
+            this.listenerState.addListener({type: ListenerType.ON_NOTIFICATION_OPENED_APP, unsubscribe: onNotificationOpenUnsubscribe});
+            this.listenerState.addListener({type: ListenerType.ON_MESSAGE, unsubscribe: onMessengerUnsubscribe});
+        }
+    }
+
+    public subscribe(listenerType: ListenerType) {
+        switch (listenerType) {
+            case ListenerType.ON_MESSAGE:
+                const onMessengerUnsubscribe = this.pushNotificationService.onMessage(
+                    this.pushNotificationHandlerService.handleOnMessage.bind(this.pushNotificationHandlerService));
+                this.listenerState.addListener({type: ListenerType.ON_MESSAGE, unsubscribe: onMessengerUnsubscribe});
+                break;
+            case ListenerType.ON_NOTIFICATION_OPENED_APP:
+                const onNotificationOpenUnsubscribe = this.pushNotificationService.onNotificationOpenedApp(
+                    this.pushNotificationHandlerService.handleOnNotificationOpened.bind(this.pushNotificationHandlerService)
+                );
+                this.listenerState.addListener({type: ListenerType.ON_NOTIFICATION_OPENED_APP, unsubscribe: onNotificationOpenUnsubscribe});
+                break;
+        }
+    }
+
+    public unsubscribe(listenerType: ListenerType) {
+        const listener: Listener = this.listenerState.findListener(listenerType);
+        if (listener.unsubscribe) {
+            listener.unsubscribe();
+            this.listenerState.removeListener(listenerType);
+        }
     }
 
     private addDynamicLinksListeners(): void {
         this.dynamicLinksService.getInitialLinkInBackground();
     }
-
-    // const requestPermissions = async () => {
-    //     const pushNotificationsService: IPushNotificationService = iocContainer.get(Type.PushNotificationsService);
-    //     const notificationService: INotificationsService = iocContainer.get(Type.NotificationsService);
-    //     await pushNotificationsService.requestPushPermissions();
-    //     const token = await pushNotificationsService.getPushToken();
-    //
-    //     pushNotificationsService.setBackgroundMessageHandler(async (message) => {
-    //         console.log('Background message received: ', message);
-    //     });
-    //
-    //     pushNotificationsService.onMessage(async (message) => {
-    //         // console.warn('New notification: ', message.data);
-    //         notificationService.addNotification(message.data);
-    //     });
-    //
-    //     pushNotificationsService.onNotificationOpenedApp(async (remoteMessage) => {
-    //         console.warn(remoteMessage);
-    //     });
-    //     // console.warn('Token: ', token);
-    // };
-
-
 }

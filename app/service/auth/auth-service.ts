@@ -6,6 +6,7 @@ import {IUserService} from '../user/user-service-interface';
 import {UserState} from '../../state/user/user-state';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AsyncStorageKey} from '../../constants/async-storage-key';
+import {User} from '../../models/user/user';
 
 @injectable()
 export class AuthService implements IAuthService {
@@ -29,12 +30,14 @@ export class AuthService implements IAuthService {
 
     public async autoLogin(): Promise<boolean> {
         try {
-            const accessToken: string | null = await this.getAccessTokenFromAsyncStorage();
-            const user = await this.userService.getUser();
-            this.userState.setUser(user);
-            return !!accessToken;
+            const existingUser: User | null = await this.userService.getUser();
+            if (!existingUser) {
+                return false;
+            }
+            await this.userService.setUser(existingUser);
+            return this.userService.isUserCompleted(existingUser);
         } catch (e) {
-            console.error('Autologin failed', e);
+            console.warn('Auto login failed', e);
             return false;
         }
     }
@@ -52,15 +55,6 @@ export class AuthService implements IAuthService {
             await AsyncStorage.setItem(AsyncStorageKey.accessToken, token);
         } catch (e) {
             console.error('Set access token error', e);
-            throw e;
-        }
-    }
-
-    private async getAccessTokenFromAsyncStorage(): Promise<string | null> {
-        try {
-            return await AsyncStorage.getItem(AsyncStorageKey.accessToken);
-        } catch (e) {
-            console.error('Get access token error', e);
             throw e;
         }
     }

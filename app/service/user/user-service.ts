@@ -11,7 +11,6 @@ export class UserService implements IUserService {
 
     @inject(Type.UserState) private userState: UserState;
 
-
     public async getUser(): Promise<User | null> {
         try {
             return await this.getUserFromAsyncStorage();

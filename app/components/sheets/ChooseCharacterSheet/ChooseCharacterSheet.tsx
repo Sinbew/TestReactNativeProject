@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, ImageBackground, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View} from 'react-native';
-import ActionSheet, {SheetProps} from 'react-native-actions-sheet';
+import ActionSheet, {SheetManager, SheetProps} from 'react-native-actions-sheet';
 import SheetId from '../../../constants/sheet-id';
 import {observer} from 'mobx-react-lite';
 import {Character} from '../../../models/character/character';
@@ -12,10 +12,12 @@ import CharacterCardView from './views/CharacterCardView';
 import {LocalizationText} from '../../../localizations/localization-text';
 import {Color} from '../../../constants/color';
 import {Font} from '../../../constants/fonts/font';
+import {User} from '../../../models/user/user';
 
 export interface ChooseCharacterSheetProps {
     updateCharacter: (character: Character) => Promise<void>;
     character: Character | null;
+    user: User;
 }
 
 
@@ -32,7 +34,6 @@ const ChooseCharacterSheet = observer((props: SheetProps<ChooseCharacterSheetPro
     const [loading, setLoading] = useState<boolean>(false);
 
     const buttonDisabled: boolean = !selectedCharacter;
-
     const {width, height} = useWindowDimensions();
 
     useEffect(() => {
@@ -62,7 +63,9 @@ const ChooseCharacterSheet = observer((props: SheetProps<ChooseCharacterSheetPro
             </View>
         );
     };
-
+    const closeSheet = async () => {
+        await SheetManager.hide(SheetId.chooseCharacter);
+    };
     return (
         <ActionSheet
             animated={false}
@@ -72,6 +75,12 @@ const ChooseCharacterSheet = observer((props: SheetProps<ChooseCharacterSheetPro
         >
             {loading ? <LoaderView/> : null}
             <View style={styles.mainWrapper}>
+                <TouchableOpacity
+                    style={styles.closeSheetBtn}
+                    activeOpacity={0.5}
+                    onPress={closeSheet}>
+                    <Text style={styles.closeSheetBtnText}>Close</Text>
+                </TouchableOpacity>
                 <View style={styles.titlesWrapper}>
                     <Text style={styles.title}>{LocalizationText.yourSoul}</Text>
                     <Text style={styles.subTitle}>{LocalizationText.pleaseSelectClan}</Text>
@@ -110,6 +119,17 @@ const styles = StyleSheet.create({
         paddingBottom: 32,
         justifyContent: 'space-between',
         height: '100%'
+    },
+    closeSheetBtn: {
+        backgroundColor: 'rgba(239,213,72,0.1)',
+        width: '20%',
+        padding: 5,
+        borderRadius: 16
+    },
+    closeSheetBtnText: {
+        color: 'rgba(255,255,255,0.5)',
+        textAlign: 'center',
+        fontFamily: Font['Rubik-Medium']
     },
     titlesWrapper: {
         flexDirection: 'column',

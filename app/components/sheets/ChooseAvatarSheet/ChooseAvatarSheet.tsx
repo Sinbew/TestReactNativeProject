@@ -3,7 +3,7 @@ import {observer} from 'mobx-react-lite';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import SheetId from '../../../constants/sheet-id';
 import {LocalizationText} from '../../../localizations/localization-text';
-import ActionSheet, {SheetProps} from 'react-native-actions-sheet';
+import ActionSheet, {SheetManager, SheetProps} from 'react-native-actions-sheet';
 import {UserState} from '../../../state/user/user-state';
 import {useInjection} from 'inversify-react';
 import {Type} from '../../../ioc/type';
@@ -60,6 +60,10 @@ const ChooseAvatarSheet = observer((props: SheetProps<ChooseAvatarSheetProps>) =
         }
     };
 
+    const closeSheet = async () => {
+        await SheetManager.hide(SheetId.chooseAvatar);
+    };
+
     return (
         <ActionSheet
             animated={false}
@@ -67,6 +71,12 @@ const ChooseAvatarSheet = observer((props: SheetProps<ChooseAvatarSheetProps>) =
             containerStyle={styles.container}
             drawUnderStatusBar>
             <View style={styles.mainWrapper}>
+                <TouchableOpacity
+                    style={styles.closeSheetBtn}
+                    activeOpacity={0.5}
+                    onPress={closeSheet}>
+                    <Text style={styles.closeSheetBtnText}>Close</Text>
+                </TouchableOpacity>
                 <View style={styles.titlesWrapper}>
                     <Text style={styles.title}>{user.nickName}</Text>
                     <Text style={styles.subTitle}>{LocalizationText.updateAvatar}</Text>
@@ -110,6 +120,17 @@ const styles = StyleSheet.create({
         paddingTop: 59,
         paddingBottom: 32,
         height: '100%'
+    },
+    closeSheetBtn: {
+        backgroundColor: 'rgba(239,213,72,0.1)',
+        width: '20%',
+        padding: 5,
+        borderRadius: 16
+    },
+    closeSheetBtnText: {
+        color: 'rgba(255,255,255,0.5)',
+        textAlign: 'center',
+        fontFamily: Font['Rubik-Medium']
     },
     titlesWrapper: {
         flexDirection: 'column',

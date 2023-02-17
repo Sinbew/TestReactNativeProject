@@ -15,6 +15,7 @@ export const Type = {
     DeviceState: Symbol.for('DeviceState'),
     CharacterState: Symbol.for('CharacterState'),
     NotificationsState: Symbol.for('NotificationState'),
+    ListenerState: Symbol.for('ListenerState'),
 
 
 };

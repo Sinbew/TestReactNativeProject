@@ -8,20 +8,24 @@ import SettingsProvider from './app/context/settings-context/SettingsProvider';
 import {SheetProvider} from 'react-native-actions-sheet';
 import {Type} from './app/ioc/type';
 import {InitializationService} from './app/service/initialization/initialization-service';
+import {AppState} from 'react-native';
 
 const App = () => {
     const [initialRouteName, setInitialRouteName] = useState<string | null>(null);
-
+    console.log(AppState.currentState);
     useEffect(() => {
-        initialize()
-            .then(() => console.log('Initialization finished'));
+        initialize().then(postInitialize);
     }, []);
 
     const initialize = async () => {
         const initializationService: InitializationService = iocContainer.get(Type.InitializationService);
         const initialRoute: string = await initializationService.autologin();
         setInitialRouteName(initialRoute);
-        initializationService.addListeners();
+    };
+
+    const postInitialize = async () => {
+        const initializationService: InitializationService = iocContainer.get(Type.InitializationService);
+        await initializationService.handleOpenByNotification();
     };
 
     if (!initialRouteName) {

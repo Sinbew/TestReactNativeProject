@@ -3,22 +3,21 @@ import {inject, injectable} from 'inversify';
 import messaging from '@react-native-firebase/messaging';
 import {Type} from '../../ioc/type';
 import {NavigationService} from '../navigation/navigation-service';
+import {Message} from '../../models/push-notification/message';
+
 
 @injectable()
 export class PushNotificationsService implements IPushNotificationService {
     @inject(Type.NavigationService) private navigationService: NavigationService;
 
-    public async requestPushPermissions(): Promise<void> {
+    public async requestPushPermissions(): Promise<boolean> {
         try {
             const authStatus = await messaging().requestPermission();
-            const enabled =
-                authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+            return authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
                 authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-            if (enabled) {
-            }
-            console.log(authStatus);
         } catch (e) {
             console.error('Request Push Permissions Error', e);
+            return false;
         }
     }
 
@@ -38,20 +37,19 @@ export class PushNotificationsService implements IPushNotificationService {
         }
     }
 
-    public setBackgroundMessageHandler(handler: (message: any) => Promise<any>): void {
-        messaging().setBackgroundMessageHandler(handler);
+    public onMessage(handler: (message: any) => Promise<any>): () => void {
+        return messaging().onMessage(handler);
     }
 
-    public onMessage(handler: (message: any) => Promise<any>): void {
-        messaging().onMessage(handler);
+    public onNotificationOpenedApp(handler: (remoteMessage: any) => Promise<any>): () => void {
+        return messaging().onNotificationOpenedApp(handler);
     }
 
-    public onNotificationOpenedApp(handler: (remoteMessage: any) => Promise<any>): void {
-        messaging().onNotificationOpenedApp(handler);
+    public async getInitialPushNotification(): Promise<Message | null> {
+        return await messaging().getInitialNotification();
     }
 
-    public async getInitialNotificationOnStart(): Promise<any> {
-        return await messaging()
-            .getInitialNotification();
+    public async deleteToken(): Promise<void> {
+        await messaging().deleteToken();
     }
 }
