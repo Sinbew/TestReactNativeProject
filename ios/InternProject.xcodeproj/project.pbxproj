@@ -11,7 +11,7 @@
 		02A2FACD3795421AB4FF611A /* Poppins-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7A0625769524CC8921F0922 /* Poppins-ExtraBoldItalic.ttf */; };
 		0386168CF20D4810B70DA168 /* Rubik-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D9DB74D74A14355809326A0 /* Rubik-MediumItalic.ttf */; };
 		0632DBE5E4C94A629CDE7521 /* Poppins-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 279CB7B1F7C74FC6A7BB1CB9 /* Poppins-BoldItalic.ttf */; };
-		0C80B921A6F3F58F76C31292 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		0C80B921A6F3F58F76C31292 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		113F15612993DB8A008F6851 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 113F15602993DB8A008F6851 /* GoogleService-Info.plist */; };
 		116567422D80414183D6349A /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E92FE4BFBC4E4F42BA1E2078 /* Poppins-Thin.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
@@ -164,7 +164,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C80B921A6F3F58F76C31292 /* (null) in Frameworks */,
+				0C80B921A6F3F58F76C31292 /* BuildFile in Frameworks */,
 				7EA3B1646CA10FE15D7DF191 /* libPods-InternProject.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

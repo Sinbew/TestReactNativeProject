@@ -171,7 +171,6 @@ const styles = StyleSheet.create({
         color: Color['#808191'],
         fontSize: 22,
         fontFamily: Font['Rubik-Bold'],
-        // marginLeft: 100
     },
     updateInfo: {
         fontSize: 14,

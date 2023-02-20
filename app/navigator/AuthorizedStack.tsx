@@ -9,6 +9,7 @@ import {NavigationService} from '../service/navigation/navigation-service';
 import {useInjection} from 'inversify-react';
 import {Type} from '../ioc/type';
 import SingleNotificationScreen from '../screens/SingleNotificationScreen/SingleNotificationScreen';
+import AboutScreen from '../screens/AboutScreen/AboutScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -37,6 +38,7 @@ const AuthorizedStack = () => {
             <Stack.Screen name={Route.SETTINGS_SCREEN} component={settingsScreen}/>
             <Stack.Screen name={Route.NOTIFICATIONS_SCREEN} component={NotificationsScreen}/>
             <Stack.Screen name={Route.SINGLE_NOTIFICATION_SCREEN} component={SingleNotificationScreen}/>
+            <Stack.Screen name={Route.ABOUT_SCREEN} component={AboutScreen}/>
         </Stack.Navigator>
     );
 };
