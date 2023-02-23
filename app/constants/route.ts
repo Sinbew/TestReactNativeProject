@@ -9,5 +9,6 @@ export const Route = {
     HOME_SCREEN: 'HomeScreen',
     SETTINGS_SCREEN: 'SettingsScreen',
     NOTIFICATIONS_SCREEN: 'NotificationsScreen',
-    SINGLE_NOTIFICATION_SCREEN: 'SingleNotificationScreen'
+    SINGLE_NOTIFICATION_SCREEN: 'SingleNotificationScreen',
+    ABOUT_SCREEN: 'AboutScreen'
 };

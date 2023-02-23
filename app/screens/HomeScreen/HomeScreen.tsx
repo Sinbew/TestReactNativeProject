@@ -39,7 +39,7 @@ const HomeScreen = observer(() => {
     useEffect(() => {
     });
     const onAboutPress = () => {
-        console.warn('insets', insets);
+        navigation.navigate(Route.ABOUT_SCREEN as never);
     };
     const onSettingsPress = () => {
         navigation.navigate(Route.SETTINGS_SCREEN as never);
