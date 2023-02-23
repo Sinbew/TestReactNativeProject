@@ -14,7 +14,14 @@ import {ICharacterService} from '../service/character/character-service-interfac
 import {CharacterState} from '../state/character/character-state';
 import {NotificationsService} from '../service/notifications/notifications-service';
 import {NotificationsState} from '../state/notifications/notifications-state';
-import { INotificationsService } from '../service/notifications/notifications-service-interface';
+import {INotificationsService} from '../service/notifications/notifications-service-interface';
+import {IPushNotificationService} from '../service/push-notifications/push-notification-service-interface';
+import {PushNotificationsService} from '../service/push-notifications/push-notifications-service';
+import {PushNotificationHandlerService} from '../service/push-notifications/push-notification-handler-service';
+import {InitializationService} from '../service/initialization/initialization-service';
+import {NavigationService} from '../service/navigation/navigation-service';
+import {DynamicLinksService} from '../service/dynamic-links/dynamic-links-service';
+import {ListenerState} from '../state/listener/listener-state';
 
 const iocContainer = new Container();
 iocContainer.bind<IAuthService>(Type.AuthService).to(AuthService);
@@ -22,11 +29,17 @@ iocContainer.bind<IUserService>(Type.UserService).to(UserService);
 iocContainer.bind<IDeviceService>(Type.DeviceService).to(DeviceService);
 iocContainer.bind<ICharacterService>(Type.CharacterService).to(CharacterService);
 iocContainer.bind<INotificationsService>(Type.NotificationsService).to(NotificationsService);
+iocContainer.bind<IPushNotificationService>(Type.PushNotificationsService).to(PushNotificationsService);
+iocContainer.bind<PushNotificationHandlerService>(Type.PushNotificationHandlerService).to(PushNotificationHandlerService);
+iocContainer.bind<InitializationService>(Type.InitializationService).to(InitializationService);
+iocContainer.bind<NavigationService>(Type.NavigationService).to(NavigationService).inSingletonScope();
+iocContainer.bind<DynamicLinksService>(Type.DynamicLinksService).to(DynamicLinksService).inSingletonScope();
 
 iocContainer.bind<UserState>(Type.UserState).to(UserState).inSingletonScope();
 iocContainer.bind<AuthState>(Type.AuthState).to(AuthState).inSingletonScope();
 iocContainer.bind<DeviceState>(Type.DeviceState).to(DeviceState).inSingletonScope();
 iocContainer.bind<CharacterState>(Type.CharacterState).to(CharacterState).inSingletonScope();
 iocContainer.bind<NotificationsState>(Type.NotificationsState).to(NotificationsState).inSingletonScope();
+iocContainer.bind<ListenerState>(Type.ListenerState).to(ListenerState).inSingletonScope();
 
 export default iocContainer;

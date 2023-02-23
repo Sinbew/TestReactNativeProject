@@ -1,5 +1,5 @@
 export interface Notification {
-    id: number;
+    id: string;
     title: string;
     thumbnail: string;
     description: string;

@@ -18,10 +18,13 @@ import SettingsContext from '../../context/settings-context/settings-context';
 import {Character} from '../../models/character/character';
 import {Route} from '../../constants/route';
 import LaziiIcon from './LoginButton/icons/LaziiIcon';
+import {InitializationService} from '../../service/initialization/initialization-service';
+
 
 const LoginScreen = observer(() => {
     const userState: UserState = useInjection(Type.UserState);
     const userService: IUserService = useInjection(Type.UserService);
+    const initializationService: InitializationService = useInjection(Type.InitializationService);
     const user: User | null = userState.getUser();
     const {showError} = useContext(SettingsContext);
     const navigation = useNavigation();
@@ -58,6 +61,7 @@ const LoginScreen = observer(() => {
             const existingUser: User = user!;
             const updatedAvatar: User = {...existingUser, avatar: avatar};
             await userService.setUser(updatedAvatar);
+            await initializationService.addListeners();
             await SheetManager.hide(SheetId.chooseAvatar);
             navigation.navigate(Route.AUTHORIZED_STACK as never);
         } catch (e) {

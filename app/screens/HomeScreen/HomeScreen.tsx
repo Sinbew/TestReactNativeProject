@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react';
-import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View, Platform, StatusBar} from 'react-native';
+import {Image, Platform, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View} from 'react-native';
 import {Color} from '../../constants/color';
 import {User} from '../../models/user/user';
 import {useInjection} from 'inversify-react';
@@ -22,22 +22,22 @@ import {LocalizationText} from '../../localizations/localization-text';
 import {Character} from '../../models/character/character';
 import {AsyncStorageKey} from '../../constants/async-storage-key';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {PushNotificationsService} from '../../service/push-notifications/push-notifications-service';
 
 const HomeScreen = observer(() => {
-
     const userState: UserState = useInjection(Type.UserState);
     const user: User | null = userState.getUser();
     const character: Character | undefined = user?.character;
     const avatar: string | undefined = user?.avatar;
     const characterViewProps: CharacterViewProps | null = getCharacterViewProps(character);
+    const pushNotificationsService: PushNotificationsService = useInjection(Type.PushNotificationsService);
     const {height} = useWindowDimensions();
     const insets = useSafeAreaInsets();
     const navigation = useNavigation();
     const {showLoader} = useContext(SettingsContext);
 
-
     useEffect(() => {
-    }, [user]);
+    });
     const onAboutPress = () => {
         console.warn('insets', insets);
     };
@@ -64,11 +64,11 @@ const HomeScreen = observer(() => {
             default :
                 return null;
         }
-
     };
     const logOut = async () => {
         try {
             showLoader(true);
+            await pushNotificationsService.deleteToken();
             await AsyncStorage.removeItem(AsyncStorageKey.user);
             navigation.navigate(Route.NOT_AUTHORIZED_STACK as never);
             showLoader(false);
@@ -225,14 +225,14 @@ const styles = StyleSheet.create({
         backgroundColor: Color['#242731'],
         padding: 15,
         borderRadius: 16,
-        marginTop: 20
+        marginTop: 16,
     },
     logoutButtonText: {
         textAlign: 'center',
         color: Color['#FF4A1D'],
         fontFamily: Font['Rubik-Medium'],
         textTransform: 'uppercase'
-    }
+    },
 });
 
 export default HomeScreen;
